@@ -86,6 +86,9 @@
 						<div class="menu_section">
 							<h3>Menu</h3>
 							<ul class="nav side-menu">
+								<li>
+									<a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i>Dashboard</a>
+								</li>
 								<li><a><i class="fa fa-edit"></i> Penilaian <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
 										<li>
@@ -101,11 +104,8 @@
 								</li>
 							</ul>
 							<ul class="nav side-menu">
-								<li><a><i class="fa fa-users"></i>Karyawan<span class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="index.html">Karyawan</a></li>
-										<li><a href="index2.html">Tambah Karyawan</a></li>
-									</ul>
+								<li>
+									<a href="{{ route('karyawan.index') }}"><i class="fa fa-users"></i>Karyawan</a>
 								</li>
 							</ul>
 						</div>

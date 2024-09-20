@@ -93,11 +93,19 @@
 									<ul class="nav child_menu">
 										<li>
 											<a href="{{ route('penilaian.index') }}">
-												<i class="fa fa-calculator"></i>Penilaian</a>
+												<i class="fa fa-calculator"></i>Penilaian SPK</a>
+										</li>
+										<li>
+											<a href="{{ route('penilaian.index') }}">
+												<i class="fa fa-calculator"></i>Penilaian Karyawan</a>
 										</li>
 										<li>
 											<a href="{{ route('kriteria.index') }}">
 												<i class="fa fa-bar-chart"></i>Kriteria</a>
+										</li>
+										<li>
+											<a href="{{ route('subkriteria.index') }}">
+												<i class="fa fa-bar-chart"></i>Sub Kriteria</a>
 										</li>
 										<li><a href="index2.html"><i class="fa fa-print"></i>Rekap</a></li>
 									</ul>
@@ -195,9 +203,7 @@
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="row">
-					<div class="col-md-12 col-sm-12 ">
-						@yield('content')
-					</div>
+					@yield('content')
 				</div>
 			</div>
 			<!-- /page content -->

@@ -11,9 +11,8 @@ class SubKriteria extends Model
     protected $table = 'sub_kriterias';
     protected $fillable = [
         'kriteria_id',
+        'kode',
         'nama',
-        'bobot',
-        'penilaian'
     ];
 
     public function kriteria()

@@ -10,6 +10,8 @@ use Livewire\Component;
 
 class Penilaian extends Component
 {
+    public $step = 1;
+
     public $karyawans;
     public $id_karyawan = [];
     public $nama_karyawan = [];
@@ -18,6 +20,7 @@ class Penilaian extends Component
     public $subkriteria = [];
     public $nilai = [];
     public $comparisons = [];
+    public $divisis = [];
     public function mount()
     {
         $this->karyawans = Karyawan::all();
@@ -32,8 +35,17 @@ class Penilaian extends Component
             'kriterias.kode',
         )->pluck('kode')->toArray();
         // $this->kriteria = $this->kriteria->pluck('kode')->toArray();
+
+        $this->divisis = Karyawan::select('jabatan')->groupBy('jabatan')->get();
+
         $this->formInput();
     }
+
+    public function pilihKaryawan()
+    {
+        $this->step = 2;
+    }
+
 
     public function formInput()
     {

@@ -37,5 +37,6 @@ Route::resource('kriteria', KriteriaController::class);
 Route::resource('subkriteria', SubKriteriaController::class);
 Route::resource('penilaian', PenilaianController::class);
 // });
+Route::get('/get-next-sub-kriteria/{kode_kriteria}', [SubKriteriaController::class, 'getNextSubKriteria']);
 
 require __DIR__ . '/auth.php';

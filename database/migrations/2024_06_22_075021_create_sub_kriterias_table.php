@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::create('sub_kriterias', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->unsignedBigInteger('kriteria_id');
-        //     $table->foreign('kriteria_id')
-        //         ->references('id')->on('kriterias')
-        //         ->onDelete('cascade');
-
-        //     $table->string('nama');
-        //     $table->string('penilaian');
-        //     $table->integer('bobot');
-        //     $table->timestamps();
-        // });
+        Schema::create('sub_kriterias', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('kriteria_id');
+            $table->foreign('kriteria_id')
+                ->references('id')->on('kriterias')
+                ->onDelete('cascade');
+            $table->string('kode');
+            $table->string('rentang');
+            $table->string('bobot');
+            $table->timestamps();
+        });
     }
 
     /**

@@ -64,14 +64,30 @@ class DatabaseSeeder extends Seeder
                 'nama' => 'Tingkat Pendidikan',
                 'kode' => 'C1',
             ],
+            [
+                'nama' => 'Kompetensi',
+                'kode' => 'C2',
+            ],
+            [
+                'nama' => 'Upaya Fisik dan Tekanan Waktu',
+                'kode' => 'C3',
+            ],
+            [
+                'nama' => 'Absensi',
+                'kode' => 'C4',
+            ],
+            [
+                'nama' => 'Tanggung Jawab',
+                'kode' => 'C5',
+            ],
         ];
 
-        // foreach ($kriteria as $k) {
-        //     Kriteria::create([
-        //         'nama' => $k['nama'],
-        //         'kode' => $k['kode'],
-        //     ]);
-        // }
+        foreach ($kriteria as $k) {
+            Kriteria::create([
+                'nama' => $k['nama'],
+                'kode' => $k['kode'],
+            ]);
+        }
 
 
         $subKriteria = [

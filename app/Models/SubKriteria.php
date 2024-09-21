@@ -15,8 +15,23 @@ class SubKriteria extends Model
         'nama',
     ];
 
+
     public function kriteria()
     {
-        return $this->belongsTo(Kriteria::class);
+        return $this->belongsTo(Kriteria::class, 'kriteria_id');
     }
+
+    // // Tambahkan accessor ke appends
+    // protected $appends = ['nama_kriteria', 'kode_kriteria'];
+
+    // // Accessor untuk nama kriteria
+    // public function getNamaKriteriaAttribute()
+    // {
+    //     return $this->kriteria ? $this->kriteria->nama : null;
+    // }
+    // // Accessor untuk kode kriteria
+    // public function getKodeKriteriaAttribute()
+    // {
+    //     return $this->kriteria ? $this->kriteria->kode : null;
+    // }
 }

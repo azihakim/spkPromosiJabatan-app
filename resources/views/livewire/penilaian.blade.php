@@ -104,7 +104,7 @@
 			<div class="form-group row">
 				@if ($step == 3)
 					<div class="col-sm-12">
-						<button wire:click="calculateRatio" class="btn btn-success">Simpan</button>
+						<button wire:click="calculateFuzzyAHPMatrix" class="btn btn-success">Simpan</button>
 					</div>
 				@endif
 			</div>

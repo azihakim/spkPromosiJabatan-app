@@ -20,35 +20,35 @@ class Penilaian extends Component
     public $kriteria = [];
     public $subkriteria = [];
     public $nilai = [];
-    // public $comparisons = [];
-    public $comparisons =
-    [
-        "C1C2" => "9",
-        "C1C3" => "3",
-        "C1C4" => "5",
-        "C1C5" => "3",
-        "C2C1" => "0.1111111111111111",
-        "C2C3" => "3",
-        "C2C4" => "5",
-        "C2C5" => "9",
-        "C3C1" => "0.3333333333333333",
-        "C3C2" => "0.3333333333333333",
-        "C3C4" => "5",
-        "C3C5" => "3",
-        "C4C1" => "0.2",
-        "C4C2" => "0.2",
-        "C4C3" => "0.2",
-        "C4C5" => "5",
-        "C5C1" => "0.3333333333333333",
-        "C5C2" => "0.1111111111111111",
-        "C5C3" => "0.3333333333333333",
-        "C5C4" => "0.2",
-        "C1C1" => "1",
-        "C2C2" => "1",
-        "C3C3" => "1",
-        "C4C4" => "1",
-        "C5C5" => "1"
-    ];
+    public $comparisons = [];
+    // public $comparisons =
+    // [
+    //     "C1C2" => "9",
+    //     "C1C3" => "3",
+    //     "C1C4" => "5",
+    //     "C1C5" => "3",
+    //     "C2C1" => "0.1111111111111111",
+    //     "C2C3" => "3",
+    //     "C2C4" => "5",
+    //     "C2C5" => "9",
+    //     "C3C1" => "0.3333333333333333",
+    //     "C3C2" => "0.3333333333333333",
+    //     "C3C4" => "5",
+    //     "C3C5" => "3",
+    //     "C4C1" => "0.2",
+    //     "C4C2" => "0.2",
+    //     "C4C3" => "0.2",
+    //     "C4C5" => "5",
+    //     "C5C1" => "0.3333333333333333",
+    //     "C5C2" => "0.1111111111111111",
+    //     "C5C3" => "0.3333333333333333",
+    //     "C5C4" => "0.2",
+    //     "C1C1" => "1",
+    //     "C2C2" => "1",
+    //     "C3C3" => "1",
+    //     "C4C4" => "1",
+    //     "C5C5" => "1"
+    // ];
     public $divisis = [];
     public $nilaiKaryawan = false;
     public $selectedDivisi = "Pilih Divisi";
@@ -250,9 +250,240 @@ class Penilaian extends Component
                 $ratio[$kriteria] = 0; // Atau null jika diinginkan
             }
         }
-        dd($ratio);
+        // dd($ratio);
         return $ratio;
     }
+
+
+    public function getComparisonValues()
+    {
+        $comparisons = $this->comparisons;
+        $results = [];
+        foreach ($comparisons as $key => $value) {
+            $value = (float) $value;
+
+            // Cari nilai tengah (nilai yang diinput)
+            $nilaiTengah = $this->findMiddleValue($value);
+
+            // Cari nilai bawah (invers dari nilai yang diinput)
+            $nilaiBawah = $this->findLowerValue($value);
+
+            // Cari nilai atas (biasanya adalah kebalikan atau nilai lebih besar)
+            $nilaiAtas = $this->findUpperValue($value);
+
+            // Simpan hasil ke array
+            $results[$key] = [
+                'nilai_bawah' => $nilaiBawah,
+                'nilai_tengah' => $nilaiTengah,
+                'nilai_atas' => $nilaiAtas
+            ];
+        }
+        return $results;
+    }
+
+    // Fungsi untuk mencari nilai bawah sesuai aturan yang diberikan
+    private function findLowerValue($value)
+    {
+        if ($value == 1) return 1;
+        if ($value == 2) return 0.5;
+        if ($value == 0.5) return 0.666;
+        if ($value == 3) return 1;
+        if ($value == 0.333333333333333) return 0.5;
+        if ($value == 4) return 1.5;
+        if ($value == 0.25) return 0.4;
+        if ($value == 5) return 2;
+        if ($value == 0.2) return 0.333;
+        if ($value == 6) return 2.5;
+        if ($value == 0.1666666666666667) return 0.285;
+        if ($value == 7) return 3;
+        if ($value == 0.1428571428571429) return 0.25;
+        if ($value == 8) return 3.5;
+        if ($value == 0.125) return 0.222;
+        if ($value == 9) return 4;
+        if ($value == 0.111111111111111) return 0.222;
+
+        return 1; // Default jika tidak ada match
+    }
+
+    // Fungsi untuk mencari nilai tengah sesuai aturan yang diberikan
+    private function findMiddleValue($value)
+    {
+        if ($value == 1) return 1;
+        if ($value == 2) return 1;
+        if ($value == 0.5) return 1;
+        if ($value == 3) return 1.5;
+        if ($value == 0.333333333333333) return 0.666;
+        if ($value == 4) return 2;
+        if ($value == 0.25) return 0.5;
+        if ($value == 5) return 2.5;
+        if ($value == 0.2) return 0.4;
+        if ($value == 6) return 3;
+        if ($value == 0.1666666666666667) return 0.333;
+        if ($value == 7) return 3.5;
+        if ($value == 0.1428571428571429) return 0.285;
+        if ($value == 8) return 4;
+        if ($value == 0.125) return 0.25;
+        if ($value == 9) return 4.5;
+        if ($value == 0.111111111111111) return 0.222;
+
+        return 1; // Default jika tidak ada match
+    }
+
+    // Fungsi untuk mencari nilai atas sesuai aturan yang diberikan
+    private function findUpperValue($value)
+    {
+        if ($value == 1) return 1;
+        if ($value == 2) return 1.5;
+        if ($value == 0.5) return 2;
+        if ($value == 3) return 2;
+        if ($value == 0.333333333333333) return 1;
+        if ($value == 4) return 2.5;
+        if ($value == 0.25) return 0.666;
+        if ($value == 5) return 3;
+        if ($value == 0.2) return 0.5;
+        if ($value == 6) return 3.5;
+        if ($value == 0.1666666666666667) return 0.4;
+        if ($value == 7) return 4;
+        if ($value == 0.1428571428571429) return 0.333;
+        if ($value == 8) return 4.5;
+        if ($value == 0.125) return 0.285;
+        if ($value == 9) return 4.5;
+        if ($value == 0.111111111111111) return 0.25;
+
+        return 1; // Default jika tidak ada match
+    }
+
+    function calculateAllCriteriaValues()
+    {
+        $array = $this->getComparisonValues();
+        // Kriteria yang akan dihitung
+        $criteria = ['C1', 'C2', 'C3', 'C4', 'C5'];
+
+        // Inisialisasi hasil untuk setiap kriteria
+        $totals = [];
+        foreach ($criteria as $criterion) {
+            $totals[$criterion] = [
+                'nilai_bawah' => 0,
+                'nilai_tengah' => 0,
+                'nilai_atas' => 0
+            ];
+        }
+
+        // Inisialisasi total nilai keseluruhan
+        $totalKeseluruhan = [
+            'nilai_bawah' => 0,
+            'nilai_tengah' => 0,
+            'nilai_atas' => 0
+        ];
+
+        // Loop melalui array dan tambahkan nilai untuk setiap kriteria
+        foreach ($array as $key => $values) {
+            foreach ($criteria as $criterion) {
+                if (strpos($key, $criterion) === 0) {
+                    $totals[$criterion]['nilai_bawah'] += $values['nilai_bawah'];
+                    $totals[$criterion]['nilai_tengah'] += $values['nilai_tengah'];
+                    $totals[$criterion]['nilai_atas'] += $values['nilai_atas'];
+
+                    // Tambahkan ke total keseluruhan
+                    $totalKeseluruhan['nilai_bawah'] += $values['nilai_bawah'];
+                    $totalKeseluruhan['nilai_tengah'] += $values['nilai_tengah'];
+                    $totalKeseluruhan['nilai_atas'] += $values['nilai_atas'];
+                }
+            }
+        }
+
+        // Menghitung invers
+        $inverseValues = [
+            'inverse_bawah' => 1 / ($totalKeseluruhan['nilai_atas']),
+            'inverse_tengah' => 1 / ($totalKeseluruhan['nilai_tengah']),
+            'inverse_atas' => 1 / ($totalKeseluruhan['nilai_bawah'])
+        ];
+
+        // dd([
+        //     'totals_per_criteria' => $totals,
+        //     'total_overall' => $totalKeseluruhan,
+        //     'inverses' => $inverseValues
+        // ]);
+
+        return [
+            'totals_per_criteria' => $totals,
+            'total_overall' => $totalKeseluruhan,
+            'inverses' => $inverseValues
+        ];
+    }
+
+    function calculateSynthesis()
+    {
+        $synthesisResults = [];
+
+        $data = $this->calculateAllCriteriaValues();
+        $inverses = $data['inverses'];
+
+        // Loop melalui setiap kriteria
+        foreach ($data['totals_per_criteria'] as $criterion => $values) {
+            $synthesisResults[$criterion] = [
+                'synthesis_bawah' => $values['nilai_bawah'] * $inverses['inverse_bawah'],
+                'synthesis_tengah' => $values['nilai_tengah'] * $inverses['inverse_tengah'],
+                'synthesis_atas' => $values['nilai_atas'] * $inverses['inverse_atas'],
+            ];
+        }
+        // dd($synthesisResults);
+        return $synthesisResults;
+    }
+
+
+    function calculateFuzzyAHPMatrix()
+    {
+        $synthesis = $this->calculateSynthesis();
+        $matrix = [];
+
+        foreach ($synthesis as $keyI => $valuesI) {
+            foreach ($synthesis as $keyJ => $valuesJ) {
+                if ($keyI === $keyJ) {
+                    // Diagonal elements: comparison with itself is always 1
+                    $matrix[$keyI][$keyJ] = 1.00;
+                } else {
+                    // Calculate the fuzzy vector comparison based on middle, lower, and upper values
+                    $matrix[$keyI][$keyJ] = $this->calculateSingleVectorValue(
+                        $valuesI['synthesis_bawah'],   // lower bound of the current criterion
+                        $valuesI['synthesis_tengah'], // middle value of the current criterion
+                        $valuesJ['synthesis_bawah'],   // lower bound of the other criterion
+                        $valuesJ['synthesis_tengah'],  // middle value of the other criterion
+                        $valuesJ['synthesis_atas']     // upper bound of the other criterion
+                    );
+                }
+            }
+        }
+        dd($matrix);
+        return $matrix;
+    }
+
+    function calculateSingleVectorValue($currentLower, $currentMiddle, $comparisonLower, $comparisonMiddle, $comparisonUpper)
+    {
+        // If the middle value of the current criterion is greater than or equal to the upper value of the comparison criterion
+        if ($comparisonMiddle >= $currentMiddle) {
+            return 1.00;
+        }
+        // If the middle value of the current criterion is less than or equal to the lower value of the comparison criterion
+        elseif ($currentLower >= $comparisonUpper) {
+            return 0.00;
+        }
+        // Otherwise, perform a fuzzy ratio calculation for values between the bounds
+        else {
+            $a = $currentLower - $comparisonUpper;
+            $b = $comparisonMiddle - $comparisonUpper;
+            $c = $currentMiddle - $currentLower;
+            $bc = $b - $c;
+            $result = $a / $bc;
+            return $result;
+            // return ($currentLower - $comparisonUpper) / (($comparisonMiddle - $comparisonUpper) - ($currentMiddle - $currentLower));
+        }
+    }
+
+
+
+
+
 
 
 

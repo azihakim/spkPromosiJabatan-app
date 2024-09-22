@@ -96,10 +96,6 @@
 												<i class="fa fa-calculator"></i>Penilaian SPK</a>
 										</li>
 										<li>
-											<a href="{{ route('penilaian.index') }}">
-												<i class="fa fa-calculator"></i>Penilaian Karyawan</a>
-										</li>
-										<li>
 											<a href="{{ route('kriteria.index') }}">
 												<i class="fa fa-bar-chart"></i>Kriteria</a>
 										</li>

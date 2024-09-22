@@ -6,12 +6,13 @@ use App\Models\Karyawan;
 use App\Models\Kriteria;
 use App\Models\Penilaiandb;
 use App\Models\SubKriteria;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Penilaian extends Component
 {
-    public $step = 3;
+    public $step = 1;
 
     public $karyawans;
     public $id_karyawan = [];
@@ -20,35 +21,15 @@ class Penilaian extends Component
     public $kriteria = [];
     public $subkriteria = [];
     public $nilai = [];
-    public $comparisons = [];
-    // public $comparisons =
-    // [
-    //     "C1C2" => "9",
-    //     "C1C3" => "3",
-    //     "C1C4" => "5",
-    //     "C1C5" => "3",
-    //     "C2C1" => "0.1111111111111111",
-    //     "C2C3" => "3",
-    //     "C2C4" => "5",
-    //     "C2C5" => "9",
-    //     "C3C1" => "0.3333333333333333",
-    //     "C3C2" => "0.3333333333333333",
-    //     "C3C4" => "5",
-    //     "C3C5" => "3",
-    //     "C4C1" => "0.2",
-    //     "C4C2" => "0.2",
-    //     "C4C3" => "0.2",
-    //     "C4C5" => "5",
-    //     "C5C1" => "0.3333333333333333",
-    //     "C5C2" => "0.1111111111111111",
-    //     "C5C3" => "0.3333333333333333",
-    //     "C5C4" => "0.2",
-    //     "C1C1" => "1",
-    //     "C2C2" => "1",
-    //     "C3C3" => "1",
-    //     "C4C4" => "1",
-    //     "C5C5" => "1"
-    // ];
+    // public $comparisons = [];
+    public $comparisons =
+    [
+        "C1C1" => "1",
+        "C2C2" => "1",
+        "C3C3" => "1",
+        "C4C4" => "1",
+        "C5C5" => "1"
+    ];
     public $divisis = [];
     public $nilaiKaryawan = false;
     public $selectedDivisi = "Pilih Divisi";
@@ -115,8 +96,6 @@ class Penilaian extends Component
         $this->listKaryawan = Karyawan::where('jabatan', $this->selectedDivisi)->get();
     }
 
-
-
     public function formInput()
     {
         $count = count($this->kriteria);
@@ -130,18 +109,23 @@ class Penilaian extends Component
         }
     }
 
-    public function submitPenilaian()
+    public function submitPenilaianKaryawan()
     {
+        // $this->pilihDivisi();
         // Ambil data penilaian untuk hanya karyawan yang ada di listKaryawan
         $filteredPenilaianData = [];
 
         foreach ($this->listKaryawan as $karyawan) {
             // Pastikan karyawan yang ada di listKaryawan diambil
-            if (isset($this->penilaianData[$karyawan->nama])) {
-                $filteredPenilaianData[$karyawan->id] = $this->penilaianData[$karyawan->nama];
+            if (isset($this->penilaianData[$karyawan->id])) {
+                $filteredPenilaianData[$karyawan->id] = $this->penilaianData[$karyawan->id];
             }
         };
+        // dd($filteredPenilaianData);
+        return $filteredPenilaianData;
     }
+
+
 
     public function hasilPerbandingan()
     {
@@ -454,7 +438,6 @@ class Penilaian extends Component
                 }
             }
         }
-        dd($matrix);
         return $matrix;
     }
 
@@ -470,37 +453,153 @@ class Penilaian extends Component
         }
         // Otherwise, perform a fuzzy ratio calculation for values between the bounds
         else {
-            $a = $currentLower - $comparisonUpper;
-            $b = $comparisonMiddle - $comparisonUpper;
-            $c = $currentMiddle - $currentLower;
-            $bc = $b - $c;
-            $result = $a / $bc;
-            return $result;
-            // return ($currentLower - $comparisonUpper) / (($comparisonMiddle - $comparisonUpper) - ($currentMiddle - $currentLower));
+            return ($currentLower - $comparisonUpper) / (($comparisonMiddle - $comparisonUpper) - ($currentMiddle - $currentLower));
         }
     }
 
-
-
-
-
-
-
-
-    public function hasilAkhir()
+    function findColumnMinima()
     {
-        dd($this->comparisons);
-        $count = count($this->kriteria);
-        for ($i = 0; $i < $count; $i++) {
-            $total = 0;
-            for ($j = 0; $j < $count; $j++) {
-                if ($i != $j) {
-                    $key = $this->kriteria[$i] . $this->kriteria[$j];
-                    $total += $this->comparisons[$key];
+        $matrix = $this->calculateFuzzyAHPMatrix();
+        // Initialize an array to hold the minimum values for each column
+        $minValues = [];
+
+        // Get the list of criteria (keys from the matrix)
+        $criteria = array_keys($matrix);
+
+        // Initialize a variable to hold the sum of all minimum values
+        $totalSum = 0;
+
+        // Loop through each criterion (column)
+        foreach ($criteria as $criterion) {
+            // Initialize the min value for the current column to a very high value
+            $minValue = INF;
+
+            // Loop through each row in the matrix
+            foreach ($matrix as $row) {
+                // Compare the value in the current column and update the minimum if necessary
+                if ($row[$criterion] < $minValue) {
+                    $minValue = $row[$criterion];
                 }
             }
-            $this->nilai[$this->kriteria[$i]] = $total;
+
+            // Store the minimum value for the current criterion (column)
+            $minValues[$criterion] = $minValue;
+
+            // Add the minimum value to the total sum
+            $totalSum += $minValue;
         }
+
+        // Add a "total" key which is the sum of all the column minima
+        $minValues['total'] = $totalSum;
+
+        // dd($minValues); // Uncomment this line to debug
+        return $minValues;
+    }
+
+    function normalisasiBobot()
+    {
+        $kriteria = $this->findColumnMinima(); // Mengambil array bobot kriteria
+        $total = 0;
+
+        // Hitung total bobot tanpa menghitung 'total' yang sudah ada
+        foreach ($kriteria as $key => $value) {
+            if ($key !== 'total') {
+                $total += $value;
+            }
+        }
+
+        $normalisasi = [];
+
+        foreach ($kriteria as $key => $value) {
+            // Menghindari pembagian dengan nol
+            if ($key !== 'total' && $total > 0) {
+                // Normalisasi dengan 2 angka di belakang koma
+                $normalisasi[$key] = number_format($value / $total, 2, '.', '');
+            } else {
+                $normalisasi[$key] = '0.00'; // Jika totalnya nol, set ke 0.00
+            }
+        }
+
+        // Hitung total dari nilai normalisasi
+        $normalisasi['total'] = array_sum(array_map('floatval', $normalisasi)); // Konversi kembali ke float untuk penjumlahan
+        $normalisasi['total'] = number_format($normalisasi['total'], 2, '.', '');
+
+        // dd($normalisasi);
+        return $normalisasi;
+    }
+
+    function step2()
+    {
+        $penilaian = $this->submitPenilaianKaryawan();
+        $bobot = $this->normalisasiBobot();
+        $this->step = 2;
+
+        return [
+            'penilaian' => $penilaian,
+            'bobot' => $bobot,
+        ];
+    }
+
+
+    function hasilAkhir()
+    {
+        $result = $this->step2();
+        $penilaian = $result['penilaian'];
+        $bobot = $result['bobot'];
+
+        $nilaiTotal = [];
+        $rataRata = [];
+
+        // Hitung nilai total untuk setiap karyawan
+        foreach ($penilaian as $karyawanId => $kriteria) {
+            $total = 0;
+            $jumlahKriteria = count($kriteria);
+
+            foreach ($kriteria as $kriteriaId => $nilai) {
+                // Menghitung total nilai berdasarkan penilaian dan bobot
+                $total += $nilai * $bobot[$kriteriaId];
+            }
+
+            // Simpan nilai total dalam array
+            $nilaiTotal[$karyawanId] = $total;
+
+            // Hitung rata-rata nilai
+            $rataRata[$karyawanId] = $total / $jumlahKriteria;
+        }
+
+        // Mengurutkan karyawan berdasarkan nilai total (descending)
+        arsort($nilaiTotal);
+
+        // Membuat array peringkat berdasarkan urutan
+        $peringkat = [];
+        $rank = 1;
+
+        $tanggal = Carbon::now()->format('Y-m-d');
+        $divisi = $this->selectedDivisi;
+
+        // foreach ($nilaiTotal as $karyawanId => $nilai) {
+        //     $peringkat[$karyawanId] = [
+        //         'karyawan_id' => $karyawanId,
+        //         'tgl_penilaian' => $tanggal,
+        //         'divisi' => $divisi,
+        //         'peringkat' => $rank++,
+        //         'nilai_total' => $nilai,
+        //         'rata_rata' => number_format($rataRata[$karyawanId], 2, '.', ''),
+        //     ];
+        // }
+
+        foreach ($nilaiTotal as $karyawanId => $nilai) {
+            Penilaiandb::create([
+                'karyawan_id' => $karyawanId,
+                'tgl_penilaian' => $tanggal,
+                'divisi' => $divisi,
+                'peringkat' => $rank++,
+                'nilai' => number_format($rataRata[$karyawanId], 2, '.', '')
+            ]);
+        }
+
+
+        return redirect()->route('penilaian.index');
     }
 
 

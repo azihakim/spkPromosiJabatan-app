@@ -48,7 +48,7 @@
 									<div class="col-md-2 col-sm-2 col-xs-2">
 										<span class="form-control-feedback left" aria-hidden="true">{{ $k['kode'] }}</span>
 										<select class="form-control has-feedback-left"
-											wire:model="penilaianData.{{ $karyawan->nama }}.{{ $k['kode'] }}">
+											wire:model="penilaianData.{{ $karyawan->id }}.{{ $k['kode'] }}">
 											<option value="">{{ $k['nama'] }}</option>
 											@foreach ($k['sub_kriterias'] as $subKriteria)
 												<option value="{{ $subKriteria['bobot'] }}">
@@ -62,9 +62,8 @@
 							<div class="ln_solid"></div>
 						@endforeach
 					</div>
-					<button wire:click="submitPenilaian">GAS</button>
 				@endif
-			@elseif ($step == 3)
+			@elseif ($step == 2)
 				<table class="table">
 					<thead style="text-align: center">
 						<tr>
@@ -102,9 +101,13 @@
 			@endif
 
 			<div class="form-group row">
-				@if ($step == 3)
-					<div class="col-sm-12">
-						<button wire:click="calculateFuzzyAHPMatrix" class="btn btn-success">Simpan</button>
+				@if ($nilaiKaryawan && $step == 1)
+					<div class="actionBar">
+						<button wire:click="step2" class="buttonNext btn btn-warning">Next</button>
+					</div>
+				@elseif ($step == 2)
+					<div class="actionBar">
+						<button wire:click="hasilAkhir" class="buttonNext btn btn-success">Simpan</button>
 					</div>
 				@endif
 			</div>

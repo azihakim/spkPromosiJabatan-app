@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Penilaian;
 use App\Models\Penilaiandb;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PenilaianController extends Controller
 {
@@ -13,19 +14,19 @@ class PenilaianController extends Controller
      */
     public function index()
     {
-        // Menyaring data penilaian berdasarkan tanggal
-        $penilaian = Penilaiandb::orderBy('created_at')->get();
+        // Mengambil semua penilaian dan mengelompokkannya berdasarkan divisi
+        $data = Penilaiandb::select('p.divisi', 'p.tgl_penilaian')
+            ->from('penilaians as p')
+            ->whereIn('p.id', function ($query) {
+                $query->select(DB::raw('MAX(id)'))
+                    ->from('penilaians')
+                    ->groupBy('divisi');
+            })
+            ->orderBy('p.divisi')
+            ->get();
 
-        // Mengelompokkan data berdasarkan tanggal penilaian
-        $groupedPenilaian = $penilaian->groupBy('created_at');
-
-        // Mengambil satu entri pertama dari setiap grup
-        $uniquePenilaian = $groupedPenilaian->map(function ($group) {
-            return $group->first();
-        });
-
-        // Mengembalikan view dengan data yang telah disaring
-        return view('penilaian.index', compact('uniquePenilaian'));
+        // dd($data);
+        return view('penilaian.index', compact('data'));
     }
 
     /**
@@ -47,64 +48,20 @@ class PenilaianController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($created_at)
+    public function show($divisi, $tgl_penilaian)
     {
-        if (auth()->user()->role == 'Karyawan') {
-            $penilaian = PenilaianDb::where('created_at', $created_at)
-                ->get()
-                ->take(3)
-                ->sortBy(function ($penilaian) {
-                    return data_get(json_decode($penilaian->data), 'ranking');
-                });
-        } else {
-            $penilaian = PenilaianDb::where('created_at', $created_at)
-                ->get()
-                ->sortBy(function ($penilaian) {
-                    return data_get(json_decode($penilaian->data), 'ranking');
-                });
-        }
-
-
-        // Ubah data JSON menjadi objek dan tambahkan total_nilai ke model
-        $penilaian->each(function ($item) {
-            $data = json_decode($item->data);
-            $item->total_nilai = $data->total_nilai;
-        });
-
-        // Urutkan data berdasarkan total_nilai dari nilai tertinggi ke terendah
-        $penilaian = $penilaian->sortByDesc('total_nilai')->values(); // values() to reset keys
-        // dd($penilaian);
-        return view('penilaian.show', compact('penilaian'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit()
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($created_at)
-    {
-        $penilaian = PenilaianDb::where('created_at', $created_at)
-            ->orderByDesc('data->total_nilai')
+        $penilaian = PenilaianDb::with('karyawans')->where('divisi', $divisi)
+            ->where('tgl_penilaian', $tgl_penilaian)
             ->get();
+        // dd($penilaian);
+        return view('penilaian.show', compact('penilaian', 'divisi', 'tgl_penilaian'));
+    }
 
-        foreach ($penilaian as $item) {
-            $item->delete();
-        }
+    public function destroy($divisi, $tgl_penilaian)
+    {
+        Penilaiandb::where('divisi', $divisi)
+            ->where('tgl_penilaian', $tgl_penilaian)
+            ->delete();
 
         return redirect()->route('penilaian.index')->with('error', 'Penilaian berhasil dihapus');
     }

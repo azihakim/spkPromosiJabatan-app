@@ -13,14 +13,16 @@ class Penilaiandb extends Model
     protected $fillable = [
         'karyawan_id',
         'tgl_penilaian',
-        'data',
+        'divisi',
+        'peringkat',
+        'nilai',
     ];
     protected $casts = [
         'data' => 'array',
     ];
 
-    public function karyawan()
+    public function karyawans()
     {
-        return $this->belongsTo(Karyawan::class);
+        return $this->belongsTo(Karyawan::class, 'karyawan_id');
     }
 }

@@ -36,6 +36,9 @@ Route::resource('karyawan', KaryawanController::class);
 Route::resource('kriteria', KriteriaController::class);
 Route::resource('subkriteria', SubKriteriaController::class);
 Route::resource('penilaian', PenilaianController::class);
+Route::get('penilaian/{divisi}/{tgl_penilaian}', [PenilaianController::class, 'show'])->name('penilaian.show');
+Route::delete('penilaian/{divisi}/{tgl_penilaian}', [PenilaianController::class, 'destroy'])->name('penilaian.destroy');
+
 // });
 Route::get('/get-next-sub-kriteria/{kode_kriteria}', [SubKriteriaController::class, 'getNextSubKriteria']);
 

@@ -4,17 +4,17 @@
 @endsection
 
 @section('content')
-	@if (session('success'))
-		<div class="alert alert-success">
-			{{ session('success') }}
-		</div>
-	@endif
-	@if (session('error'))
-		<div class="alert alert-error">
-			{{ session('error') }}
-		</div>
-	@endif
 	<div class="col-md-12 col-sm-12">
+		@if (session('success'))
+			<div class="alert alert-success">
+				{{ session('success') }}
+			</div>
+		@endif
+		@if (session('error'))
+			<div class="alert alert-error">
+				{{ session('error') }}
+			</div>
+		@endif
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>Penilaian</h2>
@@ -36,47 +36,32 @@
 								width="100%">
 								<thead>
 									<tr>
+										<th>Divisi</th>
 										<th>Tanggal Penilaian</th>
 										<th style="width: 20%">Aksi</th>
 									</tr>
 								</thead>
 								<tbody>
-									@php
-										$data = [
-										    (object) [
-										        'tgl_penilaian' => '2021-01-01',
-										        'created_at' => '2021-01-01',
-										    ],
-										    (object) [
-										        'tgl_penilaian' => '2021-01-02',
-										        'created_at' => '2021-01-02',
-										    ],
-										    (object) [
-										        'tgl_penilaian' => '2021-01-03',
-										        'created_at' => '2021-01-03',
-										    ],
-										];
-									@endphp
 									@foreach ($data as $item)
 										<tr>
+											<td>{{ $item->divisi }}</td>
+											<td>{{ $item->tgl_penilaian }}</td>
 											<td>
-												{{ $item->tgl_penilaian }}
-											</td>
-											<td>
-												<a href="{{ route('penilaian.show', $item->created_at) }}" class="btn btn-block btn-outline-info">Cek</a>
-												{{-- @if (Auth::user()->role != 'Karyawan') --}}
-												<form action="{{ route('penilaian.destroy', $item->created_at) }}" method="POST" style="display:inline;">
+												<a href="{{ route('penilaian.show', [$item->divisi, $item->tgl_penilaian]) }}"
+													class="btn btn-block btn-outline-info">Cek</a>
+												<form action="{{ route('penilaian.destroy', [$item->divisi, $item->tgl_penilaian]) }}" method="POST"
+													style="display:inline;">
 													@csrf
 													@method('DELETE')
 													<button type="submit" class="btn btn-block btn-outline-danger">Hapus</button>
 												</form>
-												{{-- @endif --}}
-
 											</td>
 										</tr>
 									@endforeach
+
 								</tbody>
 							</table>
+
 						</div>
 					</div>
 				</div>

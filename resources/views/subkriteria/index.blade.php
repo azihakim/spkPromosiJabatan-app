@@ -38,7 +38,7 @@
 									<tr>
 										<th>No</th>
 										<th>Kriteria</th>
-										<th>Nama</th>
+										<th>Kode Sub</th>
 										<th>Bobot</th>
 										<th>Aksi</th>
 									</tr>

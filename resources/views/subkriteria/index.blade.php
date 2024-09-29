@@ -38,6 +38,7 @@
 									<tr>
 										<th>No</th>
 										<th>Kriteria</th>
+										<th>Rentang</th>
 										<th>Kode Sub</th>
 										<th>Bobot</th>
 										<th>Aksi</th>
@@ -48,6 +49,7 @@
 										<tr>
 											<td>{{ $rank + 1 }}</td>
 											<td>{{ $item->kriteria->nama }}</td>
+											<td>{{ $item->rentang }}</td>
 											<td>{{ $item->kode }}</td>
 											<td>{{ $item->bobot }}</td>
 

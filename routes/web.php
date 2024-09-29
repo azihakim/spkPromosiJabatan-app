@@ -7,6 +7,7 @@ use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PenilaianController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RekapController;
 use App\Http\Controllers\SubKriteriaController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,9 @@ Route::resource('subkriteria', SubKriteriaController::class);
 Route::resource('penilaian', PenilaianController::class);
 Route::get('penilaian/{divisi}/{tgl_penilaian}', [PenilaianController::class, 'show'])->name('penilaian.show');
 Route::delete('penilaian/{divisi}/{tgl_penilaian}', [PenilaianController::class, 'destroy'])->name('penilaian.destroy');
+Route::get('rekap', [RekapController::class, 'index'])->name('rekap.index');
+Route::post('rekap-pdf', [RekapController::class, 'rekap'])->name('rekap.rekap');
+Route::get('/divisi-by-date', [RekapController::class, 'getDivisiByDate'])->name('divisi.by.date');
 
 // });
 Route::get('/get-next-sub-kriteria/{kode_kriteria}', [SubKriteriaController::class, 'getNextSubKriteria']);

@@ -103,7 +103,7 @@
 											<a href="{{ route('subkriteria.index') }}">
 												<i class="fa fa-bar-chart"></i>Sub Kriteria</a>
 										</li>
-										<li><a href="index2.html"><i class="fa fa-print"></i>Rekap</a></li>
+										<li><a href="{{ route('rekap.index') }}"><i class="fa fa-print"></i>Rekap</a></li>
 									</ul>
 								</li>
 							</ul>

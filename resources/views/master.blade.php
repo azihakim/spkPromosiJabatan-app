@@ -196,20 +196,19 @@
 							<li class="nav-item dropdown open" style="padding-left: 15px;">
 								<a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
 									data-toggle="dropdown" aria-expanded="false">
-									{{-- <i class="fa fa-user"></i> <span>{{ Auth::user()->name }} -
-										{{ Auth::user()->role }}</span> --}}
+									<i class="fa fa-user"></i> <span>{{ Auth::user()->name }} -
+										{{ Auth::user()->role }}</span>
 								</a>
 								<div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-									{{-- <a class="dropdown-item" href="login.html"><i
-                                            class="fa fa-sign-out pull-right"></i>
-                                        Log Out</a> --}}
-									{{-- <form method="POST" action="{{ route('logout') }}">
+									{{-- <a class="dropdown-item" href="login.html"><i class="fa fa-sign-out pull-right"></i>
+										Log Out</a> --}}
+									<form method="POST" action="{{ route('logout') }}">
 										@csrf
 
 										<a href="#" class="dropdown-item" onclick="event.preventDefault(); this.closest('form').submit();">
 											<i class="fa fa-sign-out pull-right"></i> Log Out
 										</a>
-									</form> --}}
+									</form>
 								</div>
 
 

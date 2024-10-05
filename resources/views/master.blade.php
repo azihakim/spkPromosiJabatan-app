@@ -83,36 +83,61 @@
 
 					<!-- sidebar menu -->
 					<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-						<div class="menu_section">
-							<h3>Menu</h3>
-							<ul class="nav side-menu">
-								<li>
-									<a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i>Dashboard</a>
-								</li>
-								<li><a><i class="fa fa-edit"></i> Penilaian <span class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li>
-											<a href="{{ route('penilaian.index') }}">
-												<i class="fa fa-calculator"></i>Penilaian SPK</a>
-										</li>
-										<li>
-											<a href="{{ route('kriteria.index') }}">
-												<i class="fa fa-bar-chart"></i>Kriteria</a>
-										</li>
-										<li>
-											<a href="{{ route('subkriteria.index') }}">
-												<i class="fa fa-bar-chart"></i>Sub Kriteria</a>
-										</li>
-										<li><a href="{{ route('rekap.index') }}"><i class="fa fa-print"></i>Rekap</a></li>
-									</ul>
-								</li>
-							</ul>
-							<ul class="nav side-menu">
-								<li>
-									<a href="{{ route('karyawan.index') }}"><i class="fa fa-users"></i>Karyawan</a>
-								</li>
-							</ul>
-						</div>
+						@if (auth()->user()->role == 'pimpinan')
+							<div class="menu_section">
+								<h3>Menu</h3>
+								<ul class="nav side-menu">
+									<li>
+										<a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i>Dashboard</a>
+									</li>
+									<li><a><i class="fa fa-edit"></i> Penilaian <span class="fa fa-chevron-down"></span></a>
+										<ul class="nav child_menu">
+											<li>
+												<a href="{{ route('penilaian.index') }}">
+													<i class="fa fa-calculator"></i>Penilaian SPK</a>
+											</li>
+											<li><a href="{{ route('rekap.index') }}"><i class="fa fa-print"></i>Rekap</a></li>
+										</ul>
+									</li>
+								</ul>
+								<ul class="nav side-menu">
+									<li>
+										<a href="{{ route('karyawan.index') }}"><i class="fa fa-users"></i>Karyawan</a>
+									</li>
+								</ul>
+							</div>
+						@else
+							<div class="menu_section">
+								<h3>Menu</h3>
+								<ul class="nav side-menu">
+									<li>
+										<a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i>Dashboard</a>
+									</li>
+									<li><a><i class="fa fa-edit"></i> Penilaian <span class="fa fa-chevron-down"></span></a>
+										<ul class="nav child_menu">
+											<li>
+												<a href="{{ route('penilaian.index') }}">
+													<i class="fa fa-calculator"></i>Penilaian SPK</a>
+											</li>
+											<li>
+												<a href="{{ route('kriteria.index') }}">
+													<i class="fa fa-bar-chart"></i>Kriteria</a>
+											</li>
+											<li>
+												<a href="{{ route('subkriteria.index') }}">
+													<i class="fa fa-bar-chart"></i>Sub Kriteria</a>
+											</li>
+											<li><a href="{{ route('rekap.index') }}"><i class="fa fa-print"></i>Rekap</a></li>
+										</ul>
+									</li>
+								</ul>
+								<ul class="nav side-menu">
+									<li>
+										<a href="{{ route('karyawan.index') }}"><i class="fa fa-users"></i>Karyawan</a>
+									</li>
+								</ul>
+							</div>
+						@endif
 
 
 						{{-- <div class="menu_section">

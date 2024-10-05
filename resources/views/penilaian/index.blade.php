@@ -18,14 +18,16 @@
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>Penilaian</h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li>
-						<a href="{{ route('penilaian.create') }}"
-							style="text-decoration: none; transition: color 0.3s; color: rgb(76, 75, 75);">
-							<i class="fa fa-plus"></i> Tambah
-						</a>
-					</li>
-				</ul>
+				@if (auth()->user()->role == 'hrd')
+					<ul class="nav navbar-right panel_toolbox">
+						<li>
+							<a href="{{ route('penilaian.create') }}"
+								style="text-decoration: none; transition: color 0.3s; color: rgb(76, 75, 75);">
+								<i class="fa fa-plus"></i> Tambah
+							</a>
+						</li>
+					</ul>
+				@endif
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
@@ -49,12 +51,14 @@
 											<td>
 												<a href="{{ route('penilaian.show', [$item->divisi, $item->tgl_penilaian]) }}"
 													class="btn btn-block btn-outline-info">Cek</a>
-												<form action="{{ route('penilaian.destroy', [$item->divisi, $item->tgl_penilaian]) }}" method="POST"
-													style="display:inline;">
-													@csrf
-													@method('DELETE')
-													<button type="submit" class="btn btn-block btn-outline-danger">Hapus</button>
-												</form>
+												@if (auth()->user()->role == 'hrd')
+													<form action="{{ route('penilaian.destroy', [$item->divisi, $item->tgl_penilaian]) }}" method="POST"
+														style="display:inline;">
+														@csrf
+														@method('DELETE')
+														<button type="submit" class="btn btn-block btn-outline-danger">Hapus</button>
+													</form>
+												@endif
 											</td>
 										</tr>
 									@endforeach

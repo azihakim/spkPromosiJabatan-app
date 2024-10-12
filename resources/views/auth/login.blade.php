@@ -41,7 +41,7 @@
 		rel="stylesheet">
 </head>
 
-<body class="login">
+<body class="login" style="background-color: #54a454">
 	<div>
 		<a class="hiddenanchor" id="signup"></a>
 		<a class="hiddenanchor" id="signin"></a>

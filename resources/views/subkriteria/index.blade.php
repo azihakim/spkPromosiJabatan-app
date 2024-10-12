@@ -54,7 +54,7 @@
 											<td>{{ $item->bobot }}</td>
 
 											<td>
-												<a href="{{ route('subkriteria.edit', $item->id) }}" class="btn btn-warning btn-xs">Edit</a>
+												<a href="{{ route('subkriteria.edit', $item->id) }}" class="btn btn-warning btn-xs">Ubah</a>
 												<form action="{{ route('subkriteria.destroy', $item->id) }}" method="POST" style="display: inline">
 													@csrf
 													@method('DELETE')

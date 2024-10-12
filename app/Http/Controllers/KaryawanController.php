@@ -67,7 +67,7 @@ class KaryawanController extends Controller
     {
         $data = Karyawan::find($id);
         $user_id = $data->id;
-        $user = user::where('karyawan_id', $user_id)->first();
+        $user = user::where('karyawan_id', $user_id)->first() ?? new User();
         // dd($user);
         return view('karyawan.edit', compact('data', 'user'));
     }
@@ -77,30 +77,47 @@ class KaryawanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = Karyawan::find($id);
-        $data->nama = $request->nama;
-        $data->jabatan = $request->jabatan;
-        $user = user::where('karyawan_id', $id)->first();
-        if ($request->username != $user->username) {
-            $request->validate([
-                'username' => 'required|string|max:255|unique:users,username',
-            ]);
-        };
-        $data->save();
+        try {
+            $data = Karyawan::find($id);
+            $data->nama = $request->nama;
+            $data->jabatan = $request->jabatan;
 
+            $user = User::where('karyawan_id', $id)->first();
 
+            if ($user) {
+                if ($request->username != $user->username) {
+                    $request->validate([
+                        'username' => 'required|string|max:255|unique:users,username',
+                    ]);
+                }
+                $user->username = $request->username;
+                $user->name = $request->nama;
+                if ($request->password != null) {
+                    $user->password = Hash::make($request->password);
+                }
+                $user->role = 'Karyawan';
+                $user->save();
+            } else {
+                $request->validate([
+                    'username' => 'required|string|max:255|unique:users,username',
+                    'password' => 'required|string',
+                ]);
 
-        $user->username = $request->username;
-        $user->karyawan_id = $data->id;
-        $user->name = $request->nama;
-        if ($request->password != null) {
-            $user->password = Hash::make($request->password);
+                $user = new User();
+                $user->karyawan_id = $data->id;
+                $user->name = $request->nama;
+                $user->username = $request->username;
+                $user->password = Hash::make($request->password);
+                $user->role = 'Karyawan';
+                $user->save();
+            }
+
+            $data->save();
+
+            return redirect()->route('karyawan.index')->with('success', 'Karyawan Berhasil di Update.');
+        } catch (\Exception $e) {
+            return redirect()->route('karyawan.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
-        $user->role = 'Karyawan';
-        $user->save();
-
-        return redirect()->route('karyawan.index')->with('success', 'Karyawan Berhasil di Update.');
-        //
     }
 
     /**

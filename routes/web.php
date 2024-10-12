@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('rekap', [RekapController::class, 'index'])->name('rekap.index');
     Route::post('rekap-pdf', [RekapController::class, 'rekap'])->name('rekap.rekap');
     Route::get('/divisi-by-date', [RekapController::class, 'getDivisiByDate'])->name('divisi.by.date');
+    Route::put('validasi/{divisi}/{tgl_penilaian}', [PenilaianController::class, 'validasi'])->name('penilaian.validasi');
 });
 Route::get('/get-next-sub-kriteria/{kode_kriteria}', [SubKriteriaController::class, 'getNextSubKriteria']);
 

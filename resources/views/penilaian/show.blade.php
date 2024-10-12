@@ -19,7 +19,7 @@
 					</div>
 				@endif
 
-				<table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
+				<table id="datatable" class="table table-striped table-bordered" style="width:100%">
 					<thead>
 						<tr>
 							<th style="width: 5%; ">Rank</th>

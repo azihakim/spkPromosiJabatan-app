@@ -40,6 +40,7 @@
 									<tr>
 										<th>Divisi</th>
 										<th>Tanggal Penilaian</th>
+										<th>Status</th>
 										<th style="width: 20%">Aksi</th>
 									</tr>
 								</thead>
@@ -49,6 +50,13 @@
 											<td>{{ $item->divisi }}</td>
 											<td>{{ $item->tgl_penilaian }}</td>
 											<td>
+												@if ($item->status == '0')
+													<span class="badge badge-danger">Belum di validasi</span>
+												@else
+													<span class="badge badge-success">Sudah di validasi</span>
+												@endif
+											</td>
+											<td>
 												<a href="{{ route('penilaian.show', [$item->divisi, $item->tgl_penilaian]) }}"
 													class="btn btn-block btn-outline-info">Cek</a>
 												@if (auth()->user()->role == 'hrd')
@@ -57,6 +65,14 @@
 														@csrf
 														@method('DELETE')
 														<button type="submit" class="btn btn-block btn-outline-danger">Hapus</button>
+													</form>
+												@endif
+												@if (auth()->user()->role == 'pimpinan' && $item->status == '0')
+													<form action="{{ route('penilaian.validasi', [$item->divisi, $item->tgl_penilaian]) }}" method="POST"
+														style="display:inline;">
+														@csrf
+														@method('PUT')
+														<button type="submit" class="btn btn-block btn-outline-warning">Validasi</button>
 													</form>
 												@endif
 											</td>

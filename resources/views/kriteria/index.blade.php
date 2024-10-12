@@ -4,17 +4,17 @@
 @endsection
 
 @section('content')
-	@if (session('success'))
-		<div class="alert alert-success">
-			{{ session('success') }}
-		</div>
-	@endif
-	@if (session('error'))
-		<div class="alert alert-error">
-			{{ session('error') }}
-		</div>
-	@endif
 	<div class="col-md-12 col-sm-12">
+		@if (session('success'))
+			<div class="alert alert-success">
+				{{ session('success') }}
+			</div>
+		@endif
+		@if (session('error'))
+			<div class="alert alert-error">
+				{{ session('error') }}
+			</div>
+		@endif
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>Kriteria</h2>
@@ -49,7 +49,7 @@
 											<td style="text-align: center">
 												<div class="col-md-6">
 													<a href="{{ route('kriteria.edit', $item->id) }}" class="btn-hover">
-														<i class="fa fa-pencil"></i> Edit
+														<i class="fa fa-pencil"></i> Ubah
 													</a>
 												</div>
 												@if ($item->id)

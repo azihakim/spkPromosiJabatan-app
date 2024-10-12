@@ -106,7 +106,7 @@
 									</li>
 								</ul>
 							</div>
-						@else
+						@elseif(auth()->user()->role == 'hrd')
 							<div class="menu_section">
 								<h3>Menu</h3>
 								<ul class="nav side-menu">
@@ -134,6 +134,23 @@
 								<ul class="nav side-menu">
 									<li>
 										<a href="{{ route('karyawan.index') }}"><i class="fa fa-users"></i>Karyawan</a>
+									</li>
+								</ul>
+							</div>
+						@else
+							<div class="menu_section">
+								<h3>Menu</h3>
+								<ul class="nav side-menu">
+									<li>
+										<a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i>Dashboard</a>
+									</li>
+									<li><a><i class="fa fa-edit"></i> Penilaian <span class="fa fa-chevron-down"></span></a>
+										<ul class="nav child_menu">
+											<li>
+												<a href="{{ route('penilaian.index') }}">
+													<i class="fa fa-calculator"></i>Penilaian SPK</a>
+											</li>
+										</ul>
 									</li>
 								</ul>
 							</div>

@@ -54,7 +54,7 @@
 						<div class="text-center">
 							<img src="{{ asset('vendors/build/images/logof.png') }}" style="width: 150px">
 						</div>
-						<h1 style="color: black"><strong>Login Form</strong></h1>
+						<h1 style="color: #ffff"><strong>Login Form</strong></h1>
 						<div>
 							<input name="username" type="text" class="form-control" placeholder="username" required="" />
 						</div>

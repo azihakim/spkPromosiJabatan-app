@@ -51,7 +51,11 @@
 											wire:model="penilaianData.{{ $karyawan->id }}.{{ $k['kode'] }}">
 											<option value="">{{ $k['nama'] }}</option>
 											@foreach ($k['sub_kriterias'] as $subKriteria)
-												<option value="{{ $subKriteria['bobot'] }}">
+												<option value="{{ (int) $subKriteria['bobot'] }}"
+													{{ isset($penilaianData[$karyawan->id][$k['kode']]) &&
+													$penilaianData[$karyawan->id][$k['kode']] === (int) $subKriteria['bobot']
+													    ? 'selected'
+													    : '' }}>
 													{{ $subKriteria['rentang'] }}
 												</option>
 											@endforeach

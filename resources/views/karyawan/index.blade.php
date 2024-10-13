@@ -52,20 +52,16 @@
 											<td>{{ $item->jabatan }}</td>
 											@if (auth()->user()->role == 'hrd')
 												<td style="text-align: center">
-													<a href="{{ route('karyawan.edit', $item->id) }}" class="btn-hover">
-														<i class="fa fa-pencil"></i> Edit
-													</a>
-
-													{{-- <div class="col-md-6">
-														<form action="{{ route('karyawan.destroy', $item->id) }}" method="POST" style="display: inline;">
-															@csrf
-															@method('DELETE')
-															<button type="submit" class="btn-hover"
-																style="border: none; background: none; color: red; padding: 0; cursor: pointer;">
-																<i class="fa fa-trash"></i> Hapus
-															</button>
-														</form>
-													</div> --}}
+													<div class="col-md-6">
+														<a href="{{ route('karyawan.edit', $item->id) }}" class="btn-hover">
+															<i class="fa fa-pencil"></i> Edit
+														</a>
+													</div>
+													<div class="col-md-6">
+														<a href="{{ route('penilaiankaryawan.create', $item->id) }}" class="btn-hover">
+															<i class="fa fa-gears"></i> Penilaian
+														</a>
+													</div>
 												</td>
 											@endif
 										</tr>

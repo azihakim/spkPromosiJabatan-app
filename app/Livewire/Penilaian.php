@@ -94,7 +94,24 @@ class Penilaian extends Component
 
         // Ambil daftar karyawan berdasarkan divisi yang dipilih
         $this->listKaryawan = Karyawan::where('jabatan', $this->selectedDivisi)->get();
+
+        // Loop untuk mendapatkan penilaian karyawan dan konversi bobot ke integer
+        foreach ($this->listKaryawan as $karyawan) {
+            if ($karyawan->penilaian) {
+                // Decode penilaian dan ambil nilai berdasarkan ID karyawan
+                $decodedPenilaian = json_decode($karyawan->penilaian, true);
+
+                // Ambil nilai penilaian berdasarkan ID karyawan
+                $penilaianKaryawan = $decodedPenilaian[$karyawan->id] ?? null;
+
+                // Konversi nilai bobot ke integer jika ada
+                if ($penilaianKaryawan) {
+                    $this->penilaianData[$karyawan->id] = array_map('intval', $penilaianKaryawan);
+                }
+            }
+        }
     }
+
 
     public function formInput()
     {

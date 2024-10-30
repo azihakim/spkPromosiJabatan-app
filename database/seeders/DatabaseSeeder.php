@@ -209,7 +209,7 @@ class DatabaseSeeder extends Seeder
             [
                 'kriteria_id' => 2, // Kriteria 'Kompetensi'
                 'kode' => 'C2.1',
-                'rentang' => '≤70-80',
+                'rentang' => '<81',
                 'bobot' => '1',
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -20,6 +20,11 @@
 		</div>
 		<div class="x_content">
 			@if ($step == 1)
+				@if (session('error'))
+					<div class="alert alert-error">
+						{{ session('error') }}
+					</div>
+				@endif
 				<div class="row">
 					<div class="col-sm-3"></div>
 					<div class="col-sm-4">
@@ -36,7 +41,6 @@
 					</div>
 					<div class="col-sm-3"></div>
 				</div>
-
 
 				@if ($nilaiKaryawan)
 					<div class="form-horizontal form-label-left">
@@ -60,6 +64,9 @@
 												</option>
 											@endforeach
 										</select>
+										@if (isset($errors['penilaianData.' . $karyawan->id . '.' . $k['kode']]))
+											<span class="text-danger">{{ $errors['penilaianData.' . $karyawan->id . '.' . $k['kode']] }}</span>
+										@endif
 									</div>
 								@endforeach
 							</div>
@@ -91,9 +98,15 @@
 										@if ($i != $j)
 											<!-- Input untuk membandingkan dua kriteria yang berbeda -->
 											<input type="number" wire:model="comparisons.{{ $key }}" class="form-control" />
+											@if (isset($errors["comparisons.$key"]))
+												<span class="text-danger">{{ $errors["comparisons.$key"] }}</span>
+											@endif
 										@else
 											<!-- Input untuk kriteria yang sama, nilai tetap 1 -->
 											<input type="number" wire:model="comparisons.{{ $key }}" class="form-control" />
+											@if (isset($errors["comparisons.$key"]))
+												<span class="text-danger">{{ $errors["comparisons.$key"] }}</span>
+											@endif
 										@endif
 									</td>
 								@endforeach

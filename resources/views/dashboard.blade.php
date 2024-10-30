@@ -54,18 +54,20 @@
 						<div class="card-box table">
 							<div class="text-center">
 								{{-- <img src="{{ asset('vendors/build/images/logo.png') }}" style="width: 150px"> --}}
+                                <h1> PT BPR Syariah Al-Falah</h1>
 								<h1>Selamat Datang</h1>
 								<h2>Sistem Pendukung Keputusan</h2>
 								<h2>Promosi Jabatan</h2>
 								<hr>
 								{{-- <h2>Kriteria Penilaian dan Indikator Penilaian Karyawan</h2> --}}
 							</div>
-							<div class="row ">
+							{{-- <div class="row ">
 								<img style="width: 60%" src="{{ asset('vendors/build/images/struktur.png') }}" alt="" class="mx-auto">
+
 							</div>
-							<br>
+							<br> --}}
 							<div class="text-center">
-								<hr>
+								{{-- <hr> --}}
 								<h2>Penilaian SPK</h2>
 							</div>
 							<div class="row">
@@ -138,7 +140,7 @@
 											</tr>
 											<tr style="background-color: #fff3cd;">
 												<td>C2.1</td>
-												<td>&lt;70-80</td>
+												<td>&lt;80</td>
 												<td>1</td>
 											</tr>
 											<tr style="background-color: #fff3cd;">

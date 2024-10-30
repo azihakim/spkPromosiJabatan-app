@@ -41,6 +41,8 @@ class Penilaian extends Component
     public $normalizedComparisons = [];
     public $filteredPenilaianData = [];
 
+    public $data_penilaian = [];
+
     public function mount()
     {
         $this->karyawans = Karyawan::all();
@@ -138,7 +140,6 @@ class Penilaian extends Component
                 $filteredPenilaianData[$karyawan->id] = $this->penilaianData[$karyawan->id];
             }
         };
-        // dd($filteredPenilaianData);
         return $filteredPenilaianData;
     }
 
@@ -545,8 +546,41 @@ class Penilaian extends Component
         return $normalisasi;
     }
 
-    function step2()
+    public $errors = [];
+
+    public function checkDataPenilaian()
     {
+        $this->errors = []; // Clear previous errors
+
+        // Loop through each employee
+        foreach ($this->listKaryawan as $karyawan) {
+            $karyawanId = $karyawan->id;
+
+            // Loop through each criterion
+            foreach ($this->kriteriaPenilaian as $kriteria) {
+                $kodeKriteria = $kriteria['kode'];
+                $selectedValue = $this->penilaianData[$karyawanId][$kodeKriteria] ?? null;
+
+                // If the value is empty, add an error
+                if (empty($selectedValue)) {
+                    $this->errors["penilaianData.{$karyawanId}.{$kodeKriteria}"] = "Harap isi penilaian untuk kriteria {$kriteria['nama']}";
+                }
+            }
+        }
+        $this->loadDivisi();
+        // Return true if no errors, otherwise false
+        return empty($this->errors);
+    }
+
+    public function step2()
+    {
+
+        // Validate penilaianData before proceeding
+        if (!$this->checkDataPenilaian()) {
+            // If there are validation errors, stop here
+            return redirect()->back()->with('error', 'Ada kesalahan validasi. Silakan lengkapi semua input yang diperlukan.');
+        }
+
         $penilaian = $this->submitPenilaianKaryawan();
         $bobot = $this->normalisasiBobot();
         $this->step = 2;
@@ -558,8 +592,35 @@ class Penilaian extends Component
     }
 
 
+    public function validateComparisons()
+    {
+        $this->errors = []; // Reset errors
+
+        foreach ($this->kriteria as $i => $criterion) {
+            foreach ($this->kriteria as $j => $otherCriterion) {
+                $key = $this->kriteria[$i] . $this->kriteria[$j];
+
+                // Validate if each comparison input is set and not empty
+                if (!isset($this->comparisons[$key]) || $this->comparisons[$key] === '') {
+                    $this->errors["comparisons.$key"] = "Harap isi nilai perbandingan untuk {$criterion} dan {$otherCriterion}.";
+                }
+            }
+        }
+
+        // If errors exist, prevent proceeding to the next step
+        if (!empty($this->errors)) {
+            return false;
+        }
+
+        return true;
+    }
+
     function hasilAkhir()
     {
+        $this->validateComparisons();
+        if (!$this->validateComparisons()) {
+            return; // Stop if there are validation errors
+        }
         $result = $this->step2();
         $penilaian = $result['penilaian'];
         $bobot = $result['bobot'];

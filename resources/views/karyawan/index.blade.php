@@ -39,7 +39,7 @@
 								<thead>
 									<tr>
 										<th>Nama</th>
-										<th>Jabatan</th>
+										<th>Divisi</th>
 										@if (auth()->user()->role == 'hrd')
 											<th style="width: 20%">Aksi</th>
 										@endif

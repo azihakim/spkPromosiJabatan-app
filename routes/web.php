@@ -49,6 +49,8 @@ Route::middleware('auth')->group(function () {
     Route::post('penilaian-karyawan/{id}', [PenilaianKaryawanController::class, 'store'])->name('penilaiankaryawan.store');
     Route::get('penilaian-karyawan/{id}', [PenilaianKaryawanController::class, 'edit'])->name('penilaiankaryawan.edit');
     Route::put('penilaian-karyawan/{id}', [PenilaianKaryawanController::class, 'update'])->name('penilaiankaryawan.update');
+
+    Route::post('rekap-penilaian', [RekapController::class, 'getRekap'])->name('rekap.penilaian');
 });
 Route::get('/get-next-sub-kriteria/{kode_kriteria}', [SubKriteriaController::class, 'getNextSubKriteria']);
 

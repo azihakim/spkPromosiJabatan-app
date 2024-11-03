@@ -15,19 +15,21 @@ class PenilaianController extends Controller
     public function index()
     {
         // Mengambil semua penilaian dan mengelompokkannya berdasarkan divisi
-        $data = Penilaiandb::select('p.divisi', 'p.tgl_penilaian', 'p.status')
-            ->from('penilaians as p')
-            ->whereIn('p.id', function ($query) {
+        $data = DB::table('penilaians')
+            ->select('divisi', 'tgl_penilaian', 'status')
+            ->whereIn('id', function ($query) {
                 $query->select(DB::raw('MAX(id)'))
                     ->from('penilaians')
-                    ->groupBy('divisi');
+                    ->groupBy('tgl_penilaian', 'divisi');
             })
-            ->orderBy('p.divisi');
+            ->orderBy('divisi')
+            ->orderBy('tgl_penilaian', 'desc')
+            ->get();
         if (auth()->user()->role == 'Karyawan') {
             $data = $data->where('divisi', auth()->user()->karyawan->jabatan);
             $data = $data->where('status', 1);
         }
-        $data = $data->get();
+        // $data = $data->get();
         // dd($data);
         return view('penilaian.index', compact('data'));
     }

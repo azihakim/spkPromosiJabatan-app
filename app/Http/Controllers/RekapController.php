@@ -6,6 +6,7 @@ use App\Livewire\Penilaian;
 use App\Models\Penilaiandb;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class RekapController extends Controller
@@ -48,5 +49,34 @@ class RekapController extends Controller
             ->pluck('divisi');
 
         return response()->json($divisi);
+    }
+
+    public function getRekap(Request $request)
+    {
+        $tgl_dari = $request->tgl_dari; // Pastikan input tanggal penilaian yang dikirim adalah range
+        $tgl_sampai = $request->tgl_sampai;
+        // Mengambil total nilai per divisi berdasarkan tanggal yang dipilih
+        $totalNilaiPerDivisi = $this->getTotalNilaiPerDivisi($tgl_dari, $tgl_sampai);
+
+        // Generate PDF
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('rekap.pdf-rekap', [
+            'tgl_dari' => $tgl_dari,
+            'tgl_sampai' => $tgl_sampai,
+            'totalNilaiPerDivisi' => $totalNilaiPerDivisi,
+        ]);
+        return $pdf->download('rekap_penilaian_karyawan.pdf');
+    }
+
+    function getTotalNilaiPerDivisi($tgl_dari, $tgl_sampai)
+    {
+        // Query untuk mengambil data dan menjumlahkan nilai berdasarkan divisi
+        $result = DB::table('penilaians')
+            ->select('divisi', 'karyawan_id', DB::raw('SUM(nilai) as total_nilai'))
+            ->whereBetween('tgl_penilaian', [$tgl_dari, $tgl_sampai])
+            ->groupBy('divisi', 'karyawan_id')
+            ->get();
+
+        return $result;
     }
 }

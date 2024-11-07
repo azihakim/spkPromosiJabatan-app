@@ -68,6 +68,7 @@
 				<thead>
 					<tr>
 						<th>Ranking</th>
+						<th>Nama</th>
 						<th>Total Nilai</th>
 					</tr>
 				</thead>
@@ -80,6 +81,7 @@
 					@foreach ($sortedData as $data)
 						<tr>
 							<td>{{ $rank++ }}</td>
+							<td>{{ $data->karyawans->nama }}</td>
 							<td>{{ number_format($data->total_nilai, 2) }}</td>
 						</tr>
 					@endforeach

@@ -65,13 +65,14 @@ class RekapController extends Controller
             'tgl_sampai' => $tgl_sampai,
             'totalNilaiPerDivisi' => $totalNilaiPerDivisi,
         ]);
-        return $pdf->download('rekap_penilaian_karyawan.pdf');
+        // dd($totalNilaiPerDivisi);
+        return $pdf->stream('rekap_penilaian_karyawan.pdf');
     }
 
     function getTotalNilaiPerDivisi($tgl_dari, $tgl_sampai)
     {
         // Query untuk mengambil data dan menjumlahkan nilai berdasarkan divisi
-        $result = DB::table('penilaians')
+        $result = Penilaiandb::with('karyawans')
             ->select('divisi', 'karyawan_id', DB::raw('SUM(nilai) as total_nilai'))
             ->whereBetween('tgl_penilaian', [$tgl_dari, $tgl_sampai])
             ->groupBy('divisi', 'karyawan_id')

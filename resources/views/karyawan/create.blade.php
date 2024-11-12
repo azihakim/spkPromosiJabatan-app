@@ -24,8 +24,32 @@
 						<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
 					</div>
 
+					<div class="col-md-6 col-sm-6  form-group">
+						<input required name="jabatan" type="text" class="form-control has-feedback-left" placeholder="Jabatan">
+						<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+					</div>
+
+					<div class="col-md-6 col-sm-6  form-group">
+						<input required name="no_hp" type="text" class="form-control has-feedback-left" placeholder="Nomor telepon">
+						<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+					</div>
+
+					<div class="col-md-6 col-sm-6  form-group">
+						<input required name="agama" type="text" class="form-control has-feedback-left" placeholder="agama">
+						<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+					</div>
+
 					<div class="col-md-6 col-sm-6 form-group">
-						<select required name="jabatan" class="form-control">
+						<select required name="jenis_kelamin" class="form-control">
+							<option value="" disabled selected>Jenis Kelamin</option>
+							<option value="Laki-laki">Laki-laki</option>
+							<option value="Perempuan">Perempuan</option>
+						</select>
+						<span class="fa fa-building form-control-feedback right" aria-hidden="true"></span>
+					</div>
+
+					<div class="col-md-6 col-sm-6 form-group">
+						<select required name="divisi" class="form-control">
 							<option value="" disabled selected>Pilih Divisi</option>
 							<option value="Internal Audit">Internal Audit</option>
 							<option value="Unit Khusus">Unit Khusus</option>

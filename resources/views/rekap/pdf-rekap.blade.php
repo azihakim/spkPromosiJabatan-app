@@ -90,10 +90,6 @@
 		@endforeach
 	</div>
 
-	<div class="footer">
-		<p>&copy; {{ date('Y') }} - PT Titisan Sang Pangeran</p>
-	</div>
-
 </body>
 
 </html>

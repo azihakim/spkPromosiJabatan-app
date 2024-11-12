@@ -26,17 +26,44 @@
 						<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
 					</div>
 
+					<div class="col-md-6 col-sm-6  form-group">
+						<input required name="jabatan" type="text" class="form-control has-feedback-left" placeholder="Jabatan"
+							value="{{ $data->jabatan }}">
+						<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+					</div>
+
+					<div class="col-md-6 col-sm-6  form-group">
+						<input required name="no_hp" type="text" class="form-control has-feedback-left" placeholder="Nomor telepon"
+							value="{{ $data->no_hp }}">
+						<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+					</div>
+
+					<div class="col-md-6 col-sm-6  form-group">
+						<input required name="agama" type="text" class="form-control has-feedback-left" placeholder="Agama"
+							value="{{ $data->agama }}">
+						<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+					</div>
+
 					<div class="col-md-6 col-sm-6 form-group">
-						<select required name="jabatan" class="form-control">
-							<option value="" disabled {{ $data->jabatan ? '' : 'selected' }}>Pilih Divisi</option>
-							<option value="Internal Audit" {{ $data->jabatan == 'Internal Audit' ? 'selected' : '' }}>Internal Audit</option>
-							<option value="Unit Khusus" {{ $data->jabatan == 'Unit Khusus' ? 'selected' : '' }}>Unit Khusus</option>
-							<option value="Manajemen Risiko" {{ $data->jabatan == 'Manajemen Risiko' ? 'selected' : '' }}>Manajemen Risiko
+						<select required name="jenis_kelamin" class="form-control">
+							<option value="" disabled {{ $data->jenis_kelamin ? '' : 'selected' }}>Jenis Kelamin</option>
+							<option value="Laki-laki" {{ $data->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+							<option value="Perempuan" {{ $data->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+						</select>
+						<span class="fa fa-building form-control-feedback right" aria-hidden="true"></span>
+					</div>
+
+					<div class="col-md-6 col-sm-6 form-group">
+						<select required name="divisi" class="form-control">
+							<option value="" disabled {{ $data->divisi ? '' : 'selected' }}>Pilih Divisi</option>
+							<option value="Internal Audit" {{ $data->divisi == 'Internal Audit' ? 'selected' : '' }}>Internal Audit</option>
+							<option value="Unit Khusus" {{ $data->divisi == 'Unit Khusus' ? 'selected' : '' }}>Unit Khusus</option>
+							<option value="Manajemen Risiko" {{ $data->divisi == 'Manajemen Risiko' ? 'selected' : '' }}>Manajemen Risiko
 							</option>
-							<option value="TI/Teknologi Informasi" {{ $data->jabatan == 'TI/Teknologi Informasi' ? 'selected' : '' }}>
+							<option value="TI/Teknologi Informasi" {{ $data->divisi == 'TI/Teknologi Informasi' ? 'selected' : '' }}>
 								TI/Teknologi Informasi</option>
-							<option value="Pembiayaan" {{ $data->jabatan == 'Pembiayaan' ? 'selected' : '' }}>Pembiayaan</option>
-							<option value="Operasional" {{ $data->jabatan == 'Operasional' ? 'selected' : '' }}>Operasional</option>
+							<option value="Pembiayaan" {{ $data->divisi == 'Pembiayaan' ? 'selected' : '' }}>Pembiayaan</option>
+							<option value="Operasional" {{ $data->divisi == 'Operasional' ? 'selected' : '' }}>Operasional</option>
 						</select>
 						<span class="fa fa-building form-control-feedback right" aria-hidden="true"></span>
 					</div>

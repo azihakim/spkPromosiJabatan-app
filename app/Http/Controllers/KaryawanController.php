@@ -15,6 +15,7 @@ class KaryawanController extends Controller
     public function index()
     {
         $karyawan = Karyawan::all();
+        $karyawan = $karyawan->groupBy('divisi');
         return view('karyawan.index', compact('karyawan'));
     }
 
@@ -33,7 +34,11 @@ class KaryawanController extends Controller
     {
         $data = new Karyawan();
         $data->nama = $request->nama;
+        $data->divisi = $request->divisi;
         $data->jabatan = $request->jabatan;
+        $data->no_hp = $request->no_hp;
+        $data->agama = $request->agama;
+        $data->jenis_kelamin = $request->jenis_kelamin;
         $request->validate([
             'username' => 'required|string|max:255|unique:users,username',
         ]);
@@ -80,7 +85,11 @@ class KaryawanController extends Controller
         try {
             $data = Karyawan::find($id);
             $data->nama = $request->nama;
+            $data->divisi = $request->divisi;
             $data->jabatan = $request->jabatan;
+            $data->no_hp = $request->no_hp;
+            $data->agama = $request->agama;
+            $data->jenis_kelamin = $request->jenis_kelamin;
 
             $user = User::where('karyawan_id', $id)->first();
 

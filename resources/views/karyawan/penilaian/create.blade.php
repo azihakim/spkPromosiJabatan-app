@@ -26,8 +26,8 @@
 					</div>
 
 					<div class="col-md-6 col-sm-6 form-group has-feedback">
-						<input disabled value="{{ $karyawan->jabatan }}" name="jabatan" type="text" class="form-control"
-							id="inputSuccess3" placeholder="Jabatan">
+						<input disabled value="{{ $karyawan->divisi }}" name="divisi" type="text" class="form-control"
+							id="inputSuccess3" placeholder="divisi">
 						<span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
 					</div>
 				</div>

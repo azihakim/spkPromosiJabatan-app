@@ -17,18 +17,18 @@ class Penilaian extends Component
     public $karyawans;
     public $id_karyawan = [];
     public $nama_karyawan = [];
-    public $jabatan_karyawan = [];
+    public $divisi_karyawan = [];
     public $kriteria = [];
     public $subkriteria = [];
     public $nilai = [];
     // public $comparisons = [];
     public $comparisons =
     [
-        "C1C1" => "1",
-        "C2C2" => "1",
-        "C3C3" => "1",
-        "C4C4" => "1",
-        "C5C5" => "1"
+        "C1C1" => "2",
+        "C2C2" => "2",
+        "C3C3" => "2",
+        "C4C4" => "2",
+        "C5C5" => "2"
     ];
     public $divisis = [];
     public $nilaiKaryawan = false;
@@ -50,7 +50,7 @@ class Penilaian extends Component
         foreach ($this->karyawans as $karyawan) {
             $this->id_karyawan[$karyawan->id] = $karyawan->id;
             $this->nama_karyawan[$karyawan->id] = $karyawan->nama;
-            $this->jabatan_karyawan[$karyawan->id] = $karyawan->jabatan;
+            $this->divisi_karyawan[$karyawan->id] = $karyawan->divisi;
         }
 
         $this->kriteria = Kriteria::select(
@@ -64,7 +64,7 @@ class Penilaian extends Component
 
     public function loadDivisi()
     {
-        $this->divisis = Karyawan::select('jabatan')->groupBy('jabatan')->get();
+        $this->divisis = Karyawan::select('divisi')->groupBy('divisi')->get();
     }
 
     public function getKriteriaPenilaian()
@@ -95,7 +95,7 @@ class Penilaian extends Component
         }
 
         // Ambil daftar karyawan berdasarkan divisi yang dipilih
-        $this->listKaryawan = Karyawan::where('jabatan', $this->selectedDivisi)->get();
+        $this->listKaryawan = Karyawan::where('divisi', $this->selectedDivisi)->get();
 
         // Loop untuk mendapatkan penilaian karyawan dan konversi bobot ke integer
         foreach ($this->listKaryawan as $karyawan) {
@@ -618,6 +618,7 @@ class Penilaian extends Component
     function hasilAkhir()
     {
         $this->validateComparisons();
+        dd($this->comparisons());
         if (!$this->validateComparisons()) {
             return; // Stop if there are validation errors
         }

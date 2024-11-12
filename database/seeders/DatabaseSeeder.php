@@ -42,110 +42,110 @@ class DatabaseSeeder extends Seeder
         $karyawan = [
             [
                 'nama' => 'Hanny',
-                'jabatan' => 'IT'
+                'divisi' => 'IT'
             ],
             [
                 'nama' => 'Farhan',
-                'jabatan' => 'IT'
+                'divisi' => 'IT'
             ],
             [
                 'nama' => 'Desi',
-                'jabatan' => 'IT'
+                'divisi' => 'IT'
             ],
             [
                 'nama' => 'Amelia',
-                'jabatan' => 'IT'
+                'divisi' => 'IT'
             ],
             [
                 'nama' => 'Kevin',
-                'jabatan' => 'IT'
+                'divisi' => 'IT'
             ],
             [
                 'nama' => 'Alda',
-                'jabatan' => 'Marketing'
+                'divisi' => 'Marketing'
             ],
             [
                 'nama' => 'Devi',
-                'jabatan' => 'Marketing'
+                'divisi' => 'Marketing'
             ],
             [
                 'nama' => 'Dian',
-                'jabatan' => 'Marketing'
+                'divisi' => 'Marketing'
             ],
             [
                 'nama' => 'Anto',
-                'jabatan' => 'Marketing'
+                'divisi' => 'Marketing'
             ],
             [
                 'nama' => 'Abi',
-                'jabatan' => 'Marketing'
+                'divisi' => 'Marketing'
             ],
             [
                 'nama' => 'Imam',
-                'jabatan' => 'Operasional'
+                'divisi' => 'Operasional'
             ],
             [
                 'nama' => 'Ridwan',
-                'jabatan' => 'Operasional'
+                'divisi' => 'Operasional'
             ],
             [
                 'nama' => 'Dewi',
-                'jabatan' => 'Operasional'
+                'divisi' => 'Operasional'
             ],
             [
                 'nama' => 'Amar',
-                'jabatan' => 'Operasional'
+                'divisi' => 'Operasional'
             ],
             [
                 'nama' => 'Sari',
-                'jabatan' => 'Operasional'
+                'divisi' => 'Operasional'
             ],
             [
                 'nama' => 'Zaki',
-                'jabatan' => 'Manajemen Resiko'
+                'divisi' => 'Manajemen Resiko'
             ],
             [
                 'nama' => 'Rizki',
-                'jabatan' => 'Manajemen Resiko'
+                'divisi' => 'Manajemen Resiko'
             ],
             [
                 'nama' => 'Ridho',
-                'jabatan' => 'Manajemen Resiko'
+                'divisi' => 'Manajemen Resiko'
             ],
             [
                 'nama' => 'Zize',
-                'jabatan' => 'Manajemen Resiko'
+                'divisi' => 'Manajemen Resiko'
             ],
             [
                 'nama' => 'Shella',
-                'jabatan' => 'Manajemen Resiko'
+                'divisi' => 'Manajemen Resiko'
             ],
             [
                 'nama' => 'Wisnu',
-                'jabatan' => 'Audit'
+                'divisi' => 'Audit'
             ],
             [
                 'nama' => 'Adit',
-                'jabatan' => 'Audit'
+                'divisi' => 'Audit'
             ],
             [
                 'nama' => 'Loli',
-                'jabatan' => 'Audit'
+                'divisi' => 'Audit'
             ],
             [
                 'nama' => 'Vadel',
-                'jabatan' => 'Audit'
+                'divisi' => 'Audit'
             ],
             [
                 'nama' => 'Mayang',
-                'jabatan' => 'Audit'
+                'divisi' => 'Audit'
             ],
         ];
 
         foreach ($karyawan as $k) {
             Karyawan::create([
                 'nama' => $k['nama'],
-                'jabatan' => $k['jabatan'],
+                'divisi' => $k['divisi'],
             ]);
         }
 

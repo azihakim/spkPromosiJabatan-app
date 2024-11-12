@@ -40,34 +40,49 @@
 									<tr>
 										<th>Nama</th>
 										<th>Divisi</th>
+										<th>Penilaian</th>
 										@if (auth()->user()->role == 'hrd')
 											<th style="width: 20%">Aksi</th>
 										@endif
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($karyawan as $item)
+									@foreach ($karyawan as $divisi => $employees)
 										<tr>
-											<td>{{ $item->nama }}</td>
-											<td>{{ $item->jabatan }}</td>
-											@if (auth()->user()->role == 'hrd')
-												<td style="text-align: center">
-													<div class="col-md-6">
-														<a href="{{ route('karyawan.edit', $item->id) }}" class="btn-hover">
-															<i class="fa fa-pencil"></i> Edit
-														</a>
-													</div>
-													<div class="col-md-6">
-														<a href="{{ route('penilaiankaryawan.create', $item->id) }}" class="btn-hover">
-															<i class="fa fa-gears"></i> Penilaian
-														</a>
-													</div>
-												</td>
-											@endif
+											<td colspan="4" style="font-weight: bold;">{{ $divisi }}</td> <!-- Display Division Name -->
 										</tr>
+										@foreach ($employees as $item)
+											<tr>
+												<td>{{ $item->nama }}</td>
+												<td>{{ $item->divisi }}</td>
+												<td style="text-align: center">
+													@if (is_null($item->penilaian))
+														<span class="badge badge-warning">Penilaian Belum</span> <!-- Badge for null penilaian -->
+													@else
+														<span class="badge badge-success">Penilaian Selesai</span> <!-- Show the penilaian value -->
+													@endif
+												</td>
+												@if (auth()->user()->role == 'hrd')
+													<td style="text-align: center">
+														<div class="col-md-6">
+															<a href="{{ route('karyawan.edit', $item->id) }}" class="btn-hover">
+																<i class="fa fa-pencil"></i> Edit
+															</a>
+														</div>
+														<div class="col-md-6">
+															<a href="{{ route('penilaiankaryawan.create', $item->id) }}" class="btn-hover">
+																<i class="fa fa-gears"></i> Penilaian
+															</a>
+														</div>
+													</td>
+												@endif
+											</tr>
+										@endforeach
 									@endforeach
 								</tbody>
 							</table>
+
+
 						</div>
 					</div>
 				</div>

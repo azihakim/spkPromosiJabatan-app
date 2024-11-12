@@ -57,7 +57,7 @@
                                 <h1> PT BPR Syariah Al-Falah</h1>
 								<h1>Selamat Datang</h1>
 								<h2>Sistem Pendukung Keputusan</h2>
-								<h2>Promosi Jabatan</h2>
+								<h2>Promosi divisi</h2>
 								<hr>
 								{{-- <h2>Kriteria Penilaian dan Indikator Penilaian Karyawan</h2> --}}
 							</div>

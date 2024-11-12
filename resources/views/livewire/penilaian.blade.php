@@ -33,8 +33,8 @@
 						<select wire:model="selectedDivisi" wire:change="pilihDivisi" class="form-control has-feedback-left">
 							<option disabled selected value="Pilih Divisi">Pilih Divisi</option>
 							@foreach ($divisis as $item)
-								<option value="{{ $item->jabatan }}" @if (in_array($item->jabatan, $divisiTerpilih)) selected @endif>
-									{{ $item->jabatan }}
+								<option value="{{ $item->divisi }}" @if (in_array($item->divisi, $divisiTerpilih)) selected @endif>
+									{{ $item->divisi }}
 								</option>
 							@endforeach
 						</select>

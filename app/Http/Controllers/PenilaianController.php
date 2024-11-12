@@ -26,7 +26,7 @@ class PenilaianController extends Controller
             ->orderBy('tgl_penilaian', 'desc')
             ->get();
         if (auth()->user()->role == 'Karyawan') {
-            $data = $data->where('divisi', auth()->user()->karyawan->jabatan);
+            $data = $data->where('divisi', auth()->user()->karyawan->divisi);
             $data = $data->where('status', 1);
         }
         // $data = $data->get();

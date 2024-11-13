@@ -24,11 +24,31 @@ class Penilaian extends Component
     // public $comparisons = [];
     public $comparisons =
     [
-        "C1C1" => "2",
-        "C2C2" => "2",
-        "C3C3" => "2",
-        "C4C4" => "2",
-        "C5C5" => "2"
+        "C1C1" => "1",
+        "C1C2" => "9",
+        "C1C3" => "3",
+        "C1C4" => "5",
+        "C1C5" => "3",
+        "C2C1" => "0.111111111111111",
+        "C2C2" => "1",
+        "C2C3" => "3",
+        "C2C4" => "5",
+        "C2C5" => "9",
+        "C3C1" => "0.333333333333333",
+        "C3C2" => "0.333333333333333",
+        "C3C3" => "1",
+        "C3C4" => "5",
+        "C3C5" => "3",
+        "C4C1" => "0.2",
+        "C4C2" => "0.2",
+        "C4C3" => "0.2",
+        "C4C4" => "1",
+        "C4C5" => "5",
+        "C5C1" => "0.333333333333333",
+        "C5C2" => "0.111111111111111",
+        "C5C3" => "0.333333333333333",
+        "C5C4" => "0.2",
+        "C5C5" => "1",
     ];
     public $divisis = [];
     public $nilaiKaryawan = false;
@@ -122,7 +142,7 @@ class Penilaian extends Component
             for ($j = 0; $j < $count; $j++) {
                 if ($i != $j) {
                     $key = $this->kriteria[$i] . $this->kriteria[$j];
-                    $this->comparisons[$key] = null;
+                    // $this->comparisons[$key] = null;
                 }
             }
         }
@@ -618,7 +638,6 @@ class Penilaian extends Component
     function hasilAkhir()
     {
         $this->validateComparisons();
-        dd($this->comparisons());
         if (!$this->validateComparisons()) {
             return; // Stop if there are validation errors
         }

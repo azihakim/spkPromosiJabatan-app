@@ -27,6 +27,20 @@
 					</div>
 
 					<div class="col-md-6 col-sm-6 form-group">
+						<select required name="divisi" id="divisi" class="form-control" onchange="updateJabatanOptions()">
+							<option value="" disabled>Pilih Divisi</option>
+							<option value="Internal Audit" {{ $data->divisi == 'Internal Audit' ? 'selected' : '' }}>Internal Audit</option>
+							<option value="Unit Khusus" {{ $data->divisi == 'Unit Khusus' ? 'selected' : '' }}>Unit Khusus</option>
+							<option value="Manajemen Risiko" {{ $data->divisi == 'Manajemen Risiko' ? 'selected' : '' }}>Manajemen Risiko
+							</option>
+							<option value="TI" {{ $data->divisi == 'TI' ? 'selected' : '' }}>TI</option>
+							<option value="Pembiayaan" {{ $data->divisi == 'Pembiayaan' ? 'selected' : '' }}>Pembiayaan</option>
+							<option value="Operasional" {{ $data->divisi == 'Operasional' ? 'selected' : '' }}>Operasional</option>
+						</select>
+						<span class="fa fa-building form-control-feedback right" aria-hidden="true"></span>
+					</div>
+
+					<div class="col-md-6 col-sm-6 form-group">
 						<select required name="jabatan" id="jabatan" class="form-control has-feedback-left">
 							<option value="" disabled>Pilih Jabatan</option>
 						</select>
@@ -56,20 +70,6 @@
 							<option value="" disabled {{ $data->jenis_kelamin ? '' : 'selected' }}>Jenis Kelamin</option>
 							<option value="Laki-laki" {{ $data->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
 							<option value="Perempuan" {{ $data->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
-						</select>
-						<span class="fa fa-building form-control-feedback right" aria-hidden="true"></span>
-					</div>
-
-					<div class="col-md-6 col-sm-6 form-group">
-						<select required name="divisi" id="divisi" class="form-control" onchange="updateJabatanOptions()">
-							<option value="" disabled>Pilih Divisi</option>
-							<option value="Internal Audit" {{ $data->divisi == 'Internal Audit' ? 'selected' : '' }}>Internal Audit</option>
-							<option value="Unit Khusus" {{ $data->divisi == 'Unit Khusus' ? 'selected' : '' }}>Unit Khusus</option>
-							<option value="Manajemen Risiko" {{ $data->divisi == 'Manajemen Risiko' ? 'selected' : '' }}>Manajemen Risiko
-							</option>
-							<option value="TI" {{ $data->divisi == 'TI' ? 'selected' : '' }}>TI</option>
-							<option value="Pembiayaan" {{ $data->divisi == 'Pembiayaan' ? 'selected' : '' }}>Pembiayaan</option>
-							<option value="Operasional" {{ $data->divisi == 'Operasional' ? 'selected' : '' }}>Operasional</option>
 						</select>
 						<span class="fa fa-building form-control-feedback right" aria-hidden="true"></span>
 					</div>
@@ -130,7 +130,12 @@
 		}
 
 		// Call this function on page load to set the initial value
-		document.addEventListener("DOMContentLoaded", updateJabatanOptions);
+		document.addEventListener("DOMContentLoaded", function() {
+			const divisiSelect = document.getElementById("divisi");
+			if (divisiSelect.value) {
+				updateJabatanOptions();
+			}
+		});
 
 		function goBack() {
 			window.history.back();

@@ -140,6 +140,26 @@ class DatabaseSeeder extends Seeder
                 'nama' => 'Mayang',
                 'divisi' => 'Audit'
             ],
+            [
+                'nama' => 'Ibrahim',
+                'divisi' => 'Pembiayaan'
+            ],
+            [
+                'nama' => 'Dora',
+                'divisi' => 'Pembiayaan'
+            ],
+            [
+                'nama' => 'Ryan',
+                'divisi' => 'Pembiayaan'
+            ],
+            [
+                'nama' => 'Torik',
+                'divisi' => 'Pembiayaan'
+            ],
+            [
+                'nama' => 'Aliyah',
+                'divisi' => 'Pembiayaan'
+            ],
         ];
 
         foreach ($karyawan as $k) {

@@ -26,7 +26,6 @@
 					</div>
 				@endif
 				<div class="row">
-					<div class="col-sm-3"></div>
 					<div class="col-sm-4">
 						<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
 
@@ -39,7 +38,12 @@
 							@endforeach
 						</select>
 					</div>
-					<div class="col-sm-3"></div>
+					<div class="col-sm-4">
+                        <div class="col-md-11 xdisplay_inputx form-group row has-feedback">
+                            <input type="date" class="form-control has-feedback-left" wire:model="tanggal">
+                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+                    </div>
 				</div>
 
 				@if ($nilaiKaryawan)

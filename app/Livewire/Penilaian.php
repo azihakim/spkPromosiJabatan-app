@@ -63,8 +63,11 @@ class Penilaian extends Component
 
     public $data_penilaian = [];
 
+    public $tanggal;
+
     public function mount()
     {
+        $this->tanggal = Carbon::now()->format('Y-m-d');
         $this->karyawans = Karyawan::all();
 
         foreach ($this->karyawans as $karyawan) {
@@ -672,7 +675,6 @@ class Penilaian extends Component
         $peringkat = [];
         $rank = 1;
 
-        $tanggal = Carbon::now()->format('Y-m-d');
         $divisi = $this->selectedDivisi;
 
         // foreach ($nilaiTotal as $karyawanId => $nilai) {
@@ -686,10 +688,12 @@ class Penilaian extends Component
         //     ];
         // }
 
+        $tgl_penilaian = Carbon::parse($this->tanggal)->format('Y-m-d');
+// dd($tgl_penilaian);
         foreach ($nilaiTotal as $karyawanId => $nilai) {
             Penilaiandb::create([
                 'karyawan_id' => $karyawanId,
-                'tgl_penilaian' => $tanggal,
+                'tgl_penilaian' => $tgl_penilaian ,
                 'divisi' => $divisi,
                 'peringkat' => $rank++,
                 'nilai' => number_format($rataRata[$karyawanId], 2, '.', '')

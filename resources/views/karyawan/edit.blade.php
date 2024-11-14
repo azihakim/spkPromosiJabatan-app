@@ -31,7 +31,7 @@
 							<option value="" disabled>Pilih Divisi</option>
 							<option value="Internal Audit" {{ $data->divisi == 'Internal Audit' ? 'selected' : '' }}>Internal Audit</option>
 							<option value="Unit Khusus" {{ $data->divisi == 'Unit Khusus' ? 'selected' : '' }}>Unit Khusus</option>
-							<option value="Manajemen Risiko" {{ $data->divisi == 'Manajemen Risiko' ? 'selected' : '' }}>Manajemen Risiko
+							<option value="Manajemen Resiko" {{ $data->divisi == 'Manajemen Resiko' ? 'selected' : '' }}>Manajemen Resiko
 							</option>
 							<option value="TI" {{ $data->divisi == 'TI' ? 'selected' : '' }}>TI</option>
 							<option value="Pembiayaan" {{ $data->divisi == 'Pembiayaan' ? 'selected' : '' }}>Pembiayaan</option>
@@ -102,7 +102,7 @@
 			],
 			"Pembiayaan": ["Asisten Account Officer", "Account Officer", "Analis Pembiayaan", "Kabag Pembiayaan"],
 			"TI": ["Asisten TI", "Kabag TI"],
-			"Manajemen Risiko": ["Staff Manajemen Risiko", "Kabag Manajemen Risiko"],
+			"Manajemen Resiko": ["Staff Manajemen Resiko", "Kabag Manajemen Resiko"],
 			"Internal Audit": ["Staff Internal Audit", "Kabag Internal Audit"],
 			"Unit Khusus": ["Staff Unit Khusus", "Kabag Unit Khusus"]
 		};

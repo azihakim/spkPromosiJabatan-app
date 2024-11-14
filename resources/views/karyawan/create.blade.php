@@ -30,7 +30,7 @@
 							<option value="Operasional">Operasional</option>
 							<option value="Pembiayaan">Pembiayaan</option>
 							<option value="TI">TI</option>
-							<option value="Manajemen Risiko">Manajemen Risiko</option>
+							<option value="Manajemen Resiko">Manajemen Resiko</option>
 							<option value="Internal Audit">Internal Audit</option>
 							<option value="Unit Khusus">Unit Khusus</option>
 						</select>
@@ -102,7 +102,7 @@
 			],
 			"Pembiayaan": ["Asisten Account Officer", "Account Officer", "Analis Pembiayaan", "Kabag Pembiayaan"],
 			"TI": ["Asisten TI", "Kabag TI"],
-			"Manajemen Risiko": ["Staff Manajemen Risiko", "Kabag Manajemen Risiko"],
+			"Manajemen Resiko": ["Staff Manajemen Resiko", "Kabag Manajemen Resiko"],
 			"Internal Audit": ["Staff Internal Audit", "Kabag Internal Audit"],
 			"Unit Khusus": ["Staff Unit Khusus", "Kabag Unit Khusus"]
 		};

@@ -33,7 +33,7 @@
 							<option value="Unit Khusus" {{ $data->divisi == 'Unit Khusus' ? 'selected' : '' }}>Unit Khusus</option>
 							<option value="Manajemen Resiko" {{ $data->divisi == 'Manajemen Resiko' ? 'selected' : '' }}>Manajemen Resiko
 							</option>
-							<option value="TI" {{ $data->divisi == 'TI' ? 'selected' : '' }}>TI</option>
+							<option value="IT" {{ $data->divisi == 'IT' ? 'selected' : '' }}>IT</option>
 							<option value="Pembiayaan" {{ $data->divisi == 'Pembiayaan' ? 'selected' : '' }}>Pembiayaan</option>
 							<option value="Operasional" {{ $data->divisi == 'Operasional' ? 'selected' : '' }}>Operasional</option>
 						</select>
@@ -101,7 +101,7 @@
 				"Teller", "Kabag Operasional"
 			],
 			"Pembiayaan": ["Asisten Account Officer", "Account Officer", "Analis Pembiayaan", "Kabag Pembiayaan"],
-			"TI": ["Asisten TI", "Kabag TI"],
+			"IT": ["Asisten IT", "Kabag IT"],
 			"Manajemen Resiko": ["Staff Manajemen Resiko", "Kabag Manajemen Resiko"],
 			"Internal Audit": ["Staff Internal Audit", "Kabag Internal Audit"],
 			"Unit Khusus": ["Staff Unit Khusus", "Kabag Unit Khusus"]

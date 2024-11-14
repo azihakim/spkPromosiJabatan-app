@@ -29,7 +29,7 @@
 							<option value="" disabled selected>Pilih Divisi</option>
 							<option value="Operasional">Operasional</option>
 							<option value="Pembiayaan">Pembiayaan</option>
-							<option value="TI">TI</option>
+							<option value="IT">IT</option>
 							<option value="Manajemen Resiko">Manajemen Resiko</option>
 							<option value="Internal Audit">Internal Audit</option>
 							<option value="Unit Khusus">Unit Khusus</option>
@@ -101,7 +101,7 @@
 				"Teller", "Kabag Operasional"
 			],
 			"Pembiayaan": ["Asisten Account Officer", "Account Officer", "Analis Pembiayaan", "Kabag Pembiayaan"],
-			"TI": ["Asisten TI", "Kabag TI"],
+			"IT": ["Asisten IT", "Kabag IT"],
 			"Manajemen Resiko": ["Staff Manajemen Resiko", "Kabag Manajemen Resiko"],
 			"Internal Audit": ["Staff Internal Audit", "Kabag Internal Audit"],
 			"Unit Khusus": ["Staff Unit Khusus", "Kabag Unit Khusus"]

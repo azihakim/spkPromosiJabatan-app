@@ -71,14 +71,6 @@ class SubKriteriaController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(SubKriteria $subKriteria)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)

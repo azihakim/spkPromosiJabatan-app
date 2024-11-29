@@ -16,6 +16,7 @@ class Penilaiandb extends Model
         'divisi',
         'peringkat',
         'nilai',
+        'nilai_kriteria',
     ];
     protected $casts = [
         'data' => 'array',

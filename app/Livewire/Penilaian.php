@@ -64,7 +64,7 @@ class Penilaian extends Component
     public $data_penilaian = [];
 
     public $tanggal;
-
+    public $penilaianKaryawan = [];
     public function mount()
     {
         $this->tanggal = Carbon::now()->format('Y-m-d');
@@ -163,6 +163,7 @@ class Penilaian extends Component
                 $filteredPenilaianData[$karyawan->id] = $this->penilaianData[$karyawan->id];
             }
         };
+        $this->penilaianKaryawan = $filteredPenilaianData;
         return $filteredPenilaianData;
     }
 
@@ -689,16 +690,21 @@ class Penilaian extends Component
         // }
 
         $tgl_penilaian = Carbon::parse($this->tanggal)->format('Y-m-d');
-// dd($tgl_penilaian);
+        $penilaianKriteriaKaryawan = $this->penilaianKaryawan;
+
         foreach ($nilaiTotal as $karyawanId => $nilai) {
+            $nilaiKriteria = isset($penilaianKriteriaKaryawan[$karyawanId]) ? $penilaianKriteriaKaryawan[$karyawanId] : [];
+
             Penilaiandb::create([
                 'karyawan_id' => $karyawanId,
-                'tgl_penilaian' => $tgl_penilaian ,
+                'tgl_penilaian' => $tgl_penilaian,
                 'divisi' => $divisi,
                 'peringkat' => $rank++,
-                'nilai' => number_format($rataRata[$karyawanId], 2, '.', '')
+                'nilai' => number_format($rataRata[$karyawanId], 2, '.', ''),
+                'nilai_kriteria' => json_encode($nilaiKriteria),
             ]);
         }
+
 
 
         return redirect()->route('penilaian.index');

@@ -46,15 +46,6 @@ class KriteriaController extends Controller
         return redirect()->route('kriteria.index')->with('success', 'Kriteria berhasil ditambahkan.');
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Kriteria $kriteria)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      */

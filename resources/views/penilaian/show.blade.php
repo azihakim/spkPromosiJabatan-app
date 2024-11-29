@@ -21,22 +21,71 @@
 
 				<table id="datatable" class="table table-striped table-bordered" style="width:100%">
 					<thead>
+						<!-- Baris Header Utama -->
 						<tr>
-							<th style="width: 5%; ">Rank</th>
-							<th>Karyawan</th>
-							<th>Nilai</th>
+							<th rowspan="2" style="width: 5%; text-align: center; vertical-align: middle;">Rank</th>
+							<th rowspan="2" style="text-align: center; vertical-align: middle;">Karyawan</th>
+							<th rowspan="2" style="text-align: center; vertical-align: middle;">Nilai</th>
+							<th colspan="{{ count($kriteria) }}" style="text-align: center; vertical-align: middle;">Detail Kriteria</th>
+						</tr>
+						<!-- Baris Header Sub-Kriteria -->
+						<tr>
+							@foreach ($kriteria as $k)
+								<th style="text-align: center; vertical-align: middle;">{{ $k->nama }}</th>
+							@endforeach
 						</tr>
 					</thead>
 					<tbody>
 						@foreach ($penilaian as $item)
 							<tr>
-								<td style="text-align:center">{{ $item->peringkat }}</td>
-								<td>{{ $item->karyawans->nama }}</td>
-								<td>{{ $item->nilai }}</td>
+								<td style="text-align:center; vertical-align: middle;">{{ $item->peringkat }}</td>
+								<td style="vertical-align: middle;">{{ $item->karyawans->nama }}</td>
+								<td style="text-align:center; vertical-align: middle;">{{ $item->nilai }}</td>
+								@foreach ($kriteria as $k)
+									<td style="text-align: center; vertical-align: middle;">
+										@php
+											$nilai = $item->nilai_kriteria[$k->kode] ?? null;
+											$rentang = $nilai ? $subKriteriaMapping[$k->id][$nilai] ?? '-' : '-';
+										@endphp
+										{{ $rentang }}
+									</td>
+								@endforeach
 							</tr>
 						@endforeach
 					</tbody>
 				</table>
+
+
+
+				{{-- <div class="table-responsive">
+					<!-- Tabel Nilai Kriteria -->
+					<table class="table table-striped table-bordered" style="width:100%">
+						<thead>
+							<tr>
+								<th>Karyawan</th>
+								@foreach ($kriteria as $k)
+									<th>{{ $k->nama }}</th>
+								@endforeach
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($penilaian as $item)
+								<tr>
+									<td>{{ $item->karyawans->nama }}</td>
+									@foreach ($kriteria as $k)
+										<td>
+											@php
+												$nilai = $item->nilai_kriteria[$k->kode] ?? null;
+												$rentang = $nilai ? $subKriteriaMapping[$k->id][$nilai] ?? '-' : '-';
+											@endphp
+											{{ $rentang }}
+										</td>
+									@endforeach
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div> --}}
 
 
 			</div>

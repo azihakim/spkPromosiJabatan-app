@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('divisi');
             $table->integer('peringkat');
             $table->float('nilai');
+            $table->json('nilai_kriteria');
             $table->boolean('status')->default(0);
 
             $table->timestamps();

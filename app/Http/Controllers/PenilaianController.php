@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kriteria;
 use App\Models\Penilaian;
 use App\Models\Penilaiandb;
+use App\Models\SubKriteria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -42,25 +44,40 @@ class PenilaianController extends Controller
         return view('penilaian.penilaian');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
      */
     public function show($divisi, $tgl_penilaian)
     {
-        $penilaian = PenilaianDb::with('karyawans')->where('divisi', $divisi)
+        $penilaian = PenilaianDb::with('karyawans')
+            ->where('divisi', $divisi)
             ->where('tgl_penilaian', $tgl_penilaian)
             ->get();
-        // dd($penilaian);
-        return view('penilaian.show', compact('penilaian', 'divisi', 'tgl_penilaian'));
+
+        // Decode nilai_kriteria
+        foreach ($penilaian as $item) {
+            $item->nilai_kriteria = json_decode($item->nilai_kriteria, true);
+        }
+
+        // Ambil data sub_kriteria dan buat mapping rentang berdasarkan bobot
+        $subKriteria = SubKriteria::all()->groupBy('kriteria_id');
+        $subKriteriaMapping = [];
+
+        foreach ($subKriteria as $kriteriaId => $subItems) {
+            foreach ($subItems as $sub) {
+                $subKriteriaMapping[$sub->kriteria_id][$sub->bobot] = $sub->rentang;
+            }
+        }
+
+        $kriteria = Kriteria::all(); // Ambil semua kriteria
+
+        return view('penilaian.show', compact('penilaian', 'divisi', 'tgl_penilaian', 'kriteria', 'subKriteriaMapping'));
     }
+
+
+
+
 
     public function destroy($divisi, $tgl_penilaian)
     {

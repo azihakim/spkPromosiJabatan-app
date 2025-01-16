@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Karyawan;
 use App\Models\Kriteria;
+use App\Models\Penilaiandb;
 use Illuminate\Http\Request;
 
 class PenilaianKaryawanController extends Controller
@@ -20,7 +21,11 @@ class PenilaianKaryawanController extends Controller
 
         // Decode penilaian karyawan yang ada (jika ada)
         $penilaian = json_decode($karyawan->penilaian, true);
-        return view('karyawan.penilaian.create', compact('karyawan', 'kriteriaPenilaian', 'penilaian'));
+
+        $penilainSebelumnya = Penilaiandb::where('karyawan_id', $id)->get();
+        $kriteria = Kriteria::with('subKriterias')->get();
+
+        return view('karyawan.penilaian.create', compact('karyawan', 'kriteriaPenilaian', 'penilaian', 'penilainSebelumnya', 'kriteria'));
     }
 
     public function getKriteriaPenilaian()

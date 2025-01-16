@@ -54,8 +54,6 @@
 				</div>
 
 				<div class="ln_solid"></div>
-
-				<div class="ln_solid"></div>
 				<div class="form-group row">
 					<div class="col-md-12 col-sm-12  offset-md-5">
 						<button type="submit" class="btn btn-success">Simpan</button>
@@ -63,6 +61,50 @@
 				</div>
 
 			</form>
+		</div>
+	</div>
+
+
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>Penilaian Karyawan Sebelumnya</h2>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+			<br>
+			<table class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Tanggal</th>
+						<th>C1</th>
+						<th>C2</th>
+						<th>C3</th>
+						<th>C4</th>
+						<th>C5</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach ($penilainSebelumnya as $key => $item)
+						@php
+							$nilaiKriteria = json_decode($item->nilai_kriteria, true);
+						@endphp
+						<tr>
+							<td>{{ $key + 1 }}</td>
+							<td>{{ $item->tgl_penilaian }}</td>
+							@foreach ($kriteria as $krit)
+								@php
+									$nilai = $nilaiKriteria[$krit->kode] ?? null;
+									$rentang = $krit->subKriterias->firstWhere('bobot', $nilai)->rentang ?? '-';
+								@endphp
+								<td>{{ $rentang }}</td>
+							@endforeach
+						</tr>
+					@endforeach
+				</tbody>
+			</table>
+
+
 		</div>
 	</div>
 @endsection

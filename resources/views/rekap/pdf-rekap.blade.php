@@ -6,7 +6,7 @@
 	<title>Rekapitulasi Penilaian Karyawan</title>
 	<style>
 		body {
-			font-family: Arial, sans-serif;
+			font-family: 'DejaVu Sans',Arial, sans-serif;
 			font-size: 12px;
 			margin: 0;
 			padding: 0;
@@ -61,7 +61,7 @@
 			$rank = 1;
 		@endphp
 
-		@foreach ($totalNilaiPerDivisi->groupBy('divisi') as $divisi => $dataDivisi)
+		{{-- @foreach ($totalNilaiPerDivisi->groupBy('divisi') as $divisi => $dataDivisi)
 			<div class="division-header">Divisi: {{ $divisi }}</div>
 
 			<table>
@@ -87,8 +87,49 @@
 					@endforeach
 				</tbody>
 			</table>
-		@endforeach
+		@endforeach --}}
+
+@foreach ($totalNilaiPerDivisi->groupBy('divisi') as $divisi => $dataDivisi)
+    <h3 class="mt-4">Divisi: {{ $divisi }}</h3>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Rank</th>
+                <th>Karyawan</th>
+                <th>Nilai</th>
+                <th>Tingkat Pendidikan</th>
+                <th>Kompetensi</th>
+                <th>Tekanan Waktu</th>
+                <th>Absensi</th>
+                <th>Tanggung Jawab</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $rank = 1; // Inisialisasi rank
+            @endphp
+            @foreach ($dataDivisi as $data)
+                <tr>
+                    <td>{{ $rank++ }}</td>
+                    <td>{{ $data->nama_karyawan }}</td>
+                    <td>{{ number_format($data->total_nilai, 2) }}</td>
+                    @foreach ($data->kriteria as $kriteria)
+                        <td>{{ $kriteria['rentang_subkriteria'] ?? '-' }}</td>
+                    @endforeach
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+@endforeach
+
+
+
+
+
+
 	</div>
+
 
 </body>
 

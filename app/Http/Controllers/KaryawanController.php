@@ -134,17 +134,21 @@ class KaryawanController extends Controller
      */
     public function destroy($id)
     {
-        $karyawan = Karyawan::find($id);
+        try {
+            $karyawan = Karyawan::find($id);
+            $user = User::where('karyawan_id', $id)->first();
 
-        $user = user::where('karyawan_id', $id)->first();
+            if ($karyawan->penilaian()->exists()) {
+                return redirect()->route('karyawan.index')->with('error', 'Karyawan tidak dapat dihapus karena memiliki penilaian.');
+            }
+            if ($user) {
+                $user->delete();
+            }
+            $karyawan->delete();
 
-        if ($karyawan->penilaian()->exists()) {
-            return redirect()->route('karyawan.index')->with('error', 'Karyawan tidak dapat dihapus karena memiliki penilaian.');
+            return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->route('karyawan.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
-
-        $user->delete();
-        $karyawan->delete();
-
-        return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil dihapus');
     }
 }

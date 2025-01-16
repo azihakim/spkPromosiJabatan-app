@@ -74,6 +74,15 @@
 																<i class="fa fa-gears"></i> Penilaian
 															</a>
 														</div>
+                                                        <div class="col-md-6">
+                                                            <form action="{{ route('karyawan.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this employee?');">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn-hover" style="background: none; border: none; color: red;">
+                                                                    <i class="fa fa-trash"></i> Hapus
+                                                                </button>
+                                                            </form>
+                                                        </div>
 													</td>
 												@endif
 											</tr>

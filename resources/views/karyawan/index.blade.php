@@ -56,12 +56,16 @@
 												<td>{{ $item->nama }}</td>
 												<td>{{ $item->divisi }}</td>
 												<td style="text-align: center">
-													@if (is_null($item->penilaianDb))
-														<span class="badge badge-warning">Penilaian Belum</span> <!-- Badge for null penilaian -->
+													@if ($item->penilaianDb->last() && $item->penilaianDb->last()->tgl_penilaian == null)
+														<span class="badge badge-warning">Penilaian Belum</span>
 													@else
-														<span class="badge badge-success">
-															{{ $item->penilaianDb->last()->tgl_penilaian ?? 'N/A' }}
-														</span> <!-- Show the penilaian value -->
+														@if ($item->penilaianDb->last() && $item->penilaianDb->last()->tgl_penilaian)
+															<span class="badge badge-success">
+																{{ \Carbon\Carbon::parse($item->penilaianDb->last()->tgl_penilaian)->format('d F Y') }}
+															</span>
+														@else
+															<span class="badge badge-warning">Belum Dinilai</span>
+														@endif
 													@endif
 												</td>
 												@if (auth()->user()->role == 'hrd')

@@ -11,8 +11,8 @@ class Karyawan extends Model
     use HasFactory;
 
 
-    public function penilaian()
+    public function penilaianDb()
     {
-        return $this->hasMany(Penilaiandb::class);
+        return $this->hasMany(Penilaiandb::class, 'karyawan_id', 'id');
     }
 }

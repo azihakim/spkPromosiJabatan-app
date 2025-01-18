@@ -56,10 +56,12 @@
 												<td>{{ $item->nama }}</td>
 												<td>{{ $item->divisi }}</td>
 												<td style="text-align: center">
-													@if (is_null($item->penilaian))
+													@if (is_null($item->penilaianDb))
 														<span class="badge badge-warning">Penilaian Belum</span> <!-- Badge for null penilaian -->
 													@else
-														<span class="badge badge-success">Penilaian Selesai</span> <!-- Show the penilaian value -->
+														<span class="badge badge-success">
+															{{ $item->penilaianDb->last()->tgl_penilaian ?? 'N/A' }}
+														</span> <!-- Show the penilaian value -->
 													@endif
 												</td>
 												@if (auth()->user()->role == 'hrd')
@@ -74,15 +76,16 @@
 																<i class="fa fa-gears"></i> Penilaian
 															</a>
 														</div>
-                                                        <div class="col-md-6">
-                                                            <form action="{{ route('karyawan.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this employee?');">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn-hover" style="background: none; border: none; color: red;">
-                                                                    <i class="fa fa-trash"></i> Hapus
-                                                                </button>
-                                                            </form>
-                                                        </div>
+														<div class="col-md-6">
+															<form action="{{ route('karyawan.destroy', $item->id) }}" method="POST"
+																onsubmit="return confirm('Are you sure you want to delete this employee?');">
+																@csrf
+																@method('DELETE')
+																<button type="submit" class="btn-hover" style="background: none; border: none; color: red;">
+																	<i class="fa fa-trash"></i> Hapus
+																</button>
+															</form>
+														</div>
 													</td>
 												@endif
 											</tr>

@@ -32,7 +32,7 @@ class RekapController extends Controller
 
         // Membuat PDF
         $pdf = app('dompdf.wrapper');
-        $pdf->loadView('rekap.pdf', compact('penilaian', 'request'));
+        $pdf->download('rekap.pdf', compact('penilaian', 'request'));
 
         // Mengunduh PDF
         return $pdf->download('rekap.pdf');

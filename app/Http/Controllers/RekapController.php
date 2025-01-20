@@ -32,10 +32,10 @@ class RekapController extends Controller
 
         // Membuat PDF
         $pdf = app('dompdf.wrapper');
-        $pdf->download('rekap.pdf', compact('penilaian', 'request'));
+        $pdf->loadView('rekap.pdf', compact('penilaian', 'request'));
 
         // Mengunduh PDF
-        return $pdf->download('rekap.pdf');
+        return $pdf->loadView('rekap.pdf');
     }
 
     public function getDivisiByDate(Request $request)
@@ -60,13 +60,13 @@ class RekapController extends Controller
 
         // Generate PDF
         $pdf = app('dompdf.wrapper');
-        $pdf->download('rekap.pdf-rekap', [
+        $pdf->loadView('rekap.pdf-rekap', [
             'tgl_dari' => $tgl_dari,
             'tgl_sampai' => $tgl_sampai,
             'totalNilaiPerDivisi' => $totalNilaiPerDivisi,
         ]);
         // dd($totalNilaiPerDivisi);
-        return $pdf->stream('rekap_penilaian_karyawan.pdf');
+        return $pdf->download('rekap_penilaian_karyawan.pdf');
     }
     function getTotalNilaiPerDivisi($tgl_dari, $tgl_sampai)
     {

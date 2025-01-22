@@ -66,7 +66,7 @@ class RekapController extends Controller
             'totalNilaiPerDivisi' => $totalNilaiPerDivisi,
         ]);
         // dd($totalNilaiPerDivisi);
-        return $pdf->download('rekap_penilaian_karyawan.pdf');
+        return $pdf->stream('rekap_penilaian_karyawan.pdf');
     }
     function getTotalNilaiPerDivisi($tgl_dari, $tgl_sampai)
     {
@@ -82,8 +82,14 @@ class RekapController extends Controller
             )
             ->whereBetween('penilaians.tgl_penilaian', [$tgl_dari, $tgl_sampai]) // Filter tanggal
             ->groupBy('penilaians.divisi', 'penilaians.karyawan_id', 'penilaians.nilai_kriteria', 'karyawans.nama')
-            ->get();
-
+            ->get()
+            ->groupBy('karyawan_id')
+            ->map(function ($group) {
+                $first = $group->first();
+                $first->total_nilai = $group->sum('total_nilai');
+                return $first;
+            })
+            ->values();
         // Memproses data untuk menambahkan kriteria dan subkriteria
         foreach ($result as $data) {
             $nilai_kriteria = json_decode($data->nilai_kriteria, true); // Decode JSON nilai_kriteria

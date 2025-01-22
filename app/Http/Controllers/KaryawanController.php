@@ -126,7 +126,7 @@ class KaryawanController extends Controller
 
             return redirect()->route('karyawan.index')->with('success', 'Karyawan Berhasil di Update.');
         } catch (\Exception $e) {
-            return redirect()->route('karyawan.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 
@@ -139,9 +139,9 @@ class KaryawanController extends Controller
             $karyawan = Karyawan::find($id);
             $user = User::where('karyawan_id', $id)->first();
 
-            if ($karyawan->penilaian()->exists()) {
-                return redirect()->route('karyawan.index')->with('error', 'Karyawan tidak dapat dihapus karena memiliki penilaian.');
-            }
+            // if ($karyawan->penilaian != null) {
+            //     return redirect()->route('karyawan.index')->with('error', 'Karyawan tidak dapat dihapus karena memiliki penilaian.');
+            // }
             if ($user) {
                 $user->delete();
             }

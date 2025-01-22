@@ -30,7 +30,7 @@
 						<select required name="divisi" id="divisi" class="form-control" onchange="updateJabatanOptions()">
 							<option value="" disabled>Pilih Divisi</option>
 							<option value="Internal Audit" {{ $data->divisi == 'Internal Audit' ? 'selected' : '' }}>Internal Audit</option>
-							<option value="Unit Khusus" {{ $data->divisi == 'Unit Khusus' ? 'selected' : '' }}>Unit Khusus</option>
+							<option value="Marketing" {{ $data->divisi == 'Marketing' ? 'selected' : '' }}>Marketing</option>
 							<option value="Manajemen Resiko" {{ $data->divisi == 'Manajemen Resiko' ? 'selected' : '' }}>Manajemen Resiko
 							</option>
 							<option value="IT" {{ $data->divisi == 'IT' ? 'selected' : '' }}>IT</option>
@@ -104,7 +104,7 @@
 			"IT": ["Asisten IT", "Kabag IT"],
 			"Manajemen Resiko": ["Staff Manajemen Resiko", "Kabag Manajemen Resiko"],
 			"Internal Audit": ["Staff Internal Audit", "Kabag Internal Audit"],
-			"Unit Khusus": ["Staff Unit Khusus", "Kabag Unit Khusus"]
+			"Marketing": ["Staff Martkering", "Kabag Marketing"]
 		};
 
 		function updateJabatanOptions() {

@@ -32,7 +32,7 @@
 							<option value="IT">IT</option>
 							<option value="Manajemen Resiko">Manajemen Resiko</option>
 							<option value="Internal Audit">Internal Audit</option>
-							<option value="Unit Khusus">Unit Khusus</option>
+							<option value="Marketing">Marketing</option>
 						</select>
 						<span class="fa fa-building form-control-feedback right" aria-hidden="true"></span>
 					</div>
@@ -104,7 +104,7 @@
 			"IT": ["Asisten IT", "Kabag IT"],
 			"Manajemen Resiko": ["Staff Manajemen Resiko", "Kabag Manajemen Resiko"],
 			"Internal Audit": ["Staff Internal Audit", "Kabag Internal Audit"],
-			"Unit Khusus": ["Staff Unit Khusus", "Kabag Unit Khusus"]
+			"Marketing": ["Staff Martkering", "Kabag Marketing"]
 		};
 
 		function updateJabatanOptions() {

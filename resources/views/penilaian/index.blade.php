@@ -18,7 +18,7 @@
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>Penilaian</h2>
-				@if (auth()->user()->role == 'hrd')
+				@if (auth()->user()->role == 'operasional')
 					<ul class="nav navbar-right panel_toolbox">
 						<li>
 							<a href="{{ route('penilaian.create') }}"
@@ -59,7 +59,7 @@
 											<td>
 												<a href="{{ route('penilaian.show', [$item->divisi, $item->tgl_penilaian]) }}"
 													class="btn btn-block btn-outline-info">Cek</a>
-												@if (auth()->user()->role == 'hrd')
+												@if (auth()->user()->role == 'operasional')
 													<form action="{{ route('penilaian.destroy', [$item->divisi, $item->tgl_penilaian]) }}" method="POST"
 														style="display:inline;">
 														@csrf
@@ -67,12 +67,12 @@
 														<button type="submit" class="btn btn-block btn-outline-danger">Hapus</button>
 													</form>
 												@endif
-												@if (auth()->user()->role == 'pimpinan' && $item->status == '0')
+												@if (auth()->user()->role == 'direktur' && $item->status == '0')
 													<form action="{{ route('penilaian.validasi', [$item->divisi, $item->tgl_penilaian]) }}" method="POST"
 														style="display:inline;">
 														@csrf
 														@method('PUT')
-														<button type="submit" class="btn btn-block btn-outline-warning">Validasi</button>
+														<button type="submit" class="btn btn-block btn-outline-warning">Simpan</button>
 													</form>
 												@endif
 											</td>

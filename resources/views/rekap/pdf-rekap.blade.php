@@ -6,7 +6,7 @@
 	<title>Rekapitulasi Penilaian Karyawan</title>
 	<style>
 		body {
-			font-family: 'DejaVu Sans',Arial, sans-serif;
+			font-family: 'DejaVu Sans', Arial, sans-serif;
 			font-size: 12px;
 			margin: 0;
 			padding: 0;
@@ -46,6 +46,7 @@
 			margin-top: 10px;
 		}
 	</style>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -89,41 +90,53 @@
 			</table>
 		@endforeach --}}
 
-@foreach ($totalNilaiPerDivisi->groupBy('divisi') as $divisi => $dataDivisi)
-    <h3 class="mt-4">Divisi: {{ $divisi }}</h3>
+		@foreach ($totalNilaiPerDivisi->groupBy('divisi') as $divisi => $dataDivisi)
+			<h3 class="mt-4">Divisi: {{ $divisi }}</h3>
 
-    <table class="table table-bordered table-striped">
-        <thead class="thead-dark">
-            <tr>
-                <th>Rank</th>
-                <th>Karyawan</th>
-                <th>Nilai</th>
-                <th>Tingkat Pendidikan</th>
-                <th>Kompetensi</th>
-                <th>Tekanan Waktu</th>
-                <th>Absensi</th>
-                <th>Tanggung Jawab</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $rank = 1; // Inisialisasi rank
-            @endphp
-            @foreach ($dataDivisi as $data)
-                <tr>
-                    <td>{{ $rank++ }}</td>
-                    <td>{{ $data->nama_karyawan }}</td>
-                    <td>{{ number_format($data->total_nilai, 2) }}</td>
-                    @foreach ($data->kriteria as $kriteria)
-                        <td>{{ $kriteria['rentang_subkriteria'] ?? '-' }}</td>
-                    @endforeach
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-@endforeach
+			<table class="table table-bordered table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th>Rank</th>
+						<th>Karyawan</th>
+						<th>Nilai</th>
+						<th>Tingkat Pendidikan</th>
+						<th>Kompetensi</th>
+						<th>Tekanan Waktu</th>
+						<th>Absensi</th>
+						<th>Tanggung Jawab</th>
+					</tr>
+				</thead>
+				<tbody>
+					@php
+						$rank = 1; // Inisialisasi rank
+					@endphp
+					@foreach ($dataDivisi as $data)
+						<tr>
+							<td>{{ $rank++ }}</td>
+							<td>{{ $data->nama_karyawan }}</td>
+							<td>{{ number_format($data->total_nilai, 2) }}</td>
+							@foreach ($data->kriteria as $kriteria)
+								<td>{{ $kriteria['rentang_subkriteria'] ?? '-' }}</td>
+							@endforeach
+						</tr>
+					@endforeach
+				</tbody>
+			</table>
+		@endforeach
+		<hr>
+		<h2>Grafik Penilaian Karyawan</h2>
 
-
+		@foreach ($grafik['grafikData'] as $divisi => $tanggalData)
+			<h2>Divisi: {{ $divisi }}</h2>
+			@foreach ($tanggalData as $tanggal => $data)
+				<h4>Tanggal Penilaian: {{ $tanggal }}</h4>
+				<div style="width: 100%; margin: auto; padding-bottom: 20px;">
+					<!-- Tampilkan gambar grafik -->
+					<img src="{{ storage_path('app/public/' . $chartImages[$divisi][$tanggal]) }}"
+						alt="Grafik Nilai Divisi {{ $divisi }} - Tanggal {{ $tanggal }}" style="width: 100%">
+				</div>
+			@endforeach
+		@endforeach
 
 
 

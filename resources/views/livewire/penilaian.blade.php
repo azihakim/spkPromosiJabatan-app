@@ -39,11 +39,11 @@
 						</select>
 					</div>
 					<div class="col-sm-4">
-						<div class="col-md-11 xdisplay_inputx form-group row has-feedback">
-							<input type="date" class="form-control has-feedback-left" wire:model="tanggal">
-							<span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-						</div>
-					</div>
+                        <div class="col-md-11 xdisplay_inputx form-group row has-feedback">
+                            <input type="date" class="form-control has-feedback-left" wire:model="tanggal">
+                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+                    </div>
 				</div>
 
 				@if ($nilaiKaryawan)
@@ -128,7 +128,6 @@
 					</div>
 				@elseif ($step == 2)
 					<div class="actionBar">
-						<button wire:click="step1" class="buttonNext btn btn-danger">Kembali</button>
 						<button wire:click="hasilAkhir" class="buttonNext btn btn-success">Simpan</button>
 					</div>
 				@endif

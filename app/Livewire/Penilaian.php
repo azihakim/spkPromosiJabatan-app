@@ -596,11 +596,6 @@ class Penilaian extends Component
         return empty($this->errors);
     }
 
-    public function step1()
-    {
-        $this->step = 1;
-    }
-
     public function step2()
     {
 

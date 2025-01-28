@@ -65,6 +65,7 @@ class RekapController extends Controller
             'tgl_sampai' => $tgl_sampai,
             'totalNilaiPerDivisi' => $totalNilaiPerDivisi,
         ]);
+        // dd($totalNilaiPerDivisi);
         return $pdf->download('rekap_penilaian_karyawan.pdf');
     }
     function getTotalNilaiPerDivisi($tgl_dari, $tgl_sampai)

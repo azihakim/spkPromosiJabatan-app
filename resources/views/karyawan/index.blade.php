@@ -18,7 +18,7 @@
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>Karyawan</h2>
-				@if (auth()->user()->role == 'operasional')
+				@if (auth()->user()->role == 'hrd')
 					<ul class="nav navbar-right panel_toolbox">
 						<li>
 							<a href="{{ route('karyawan.create') }}"
@@ -41,7 +41,7 @@
 										<th>Nama</th>
 										<th>Divisi</th>
 										<th>Penilaian</th>
-										@if (auth()->user()->role == 'operasional')
+										@if (auth()->user()->role == 'hrd')
 											<th style="width: 20%">Aksi</th>
 										@endif
 									</tr>
@@ -68,7 +68,7 @@
 														@endif
 													@endif
 												</td>
-												@if (auth()->user()->role == 'operasional')
+												@if (auth()->user()->role == 'hrd')
 													<td style="text-align: center">
 														<div class="col-md-6">
 															<a href="{{ route('karyawan.edit', $item->id) }}" class="btn-hover">

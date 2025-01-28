@@ -94,7 +94,7 @@
 											</tr>
 											<tr>
 												<td>C4</td>
-												<td>Presensi kehadiran</td>
+												<td>Absensi</td>
 											</tr>
 											<tr>
 												<td>C5</td>
@@ -187,9 +187,9 @@
 												<td>3</td>
 											</tr>
 
-											<!-- Presensi kehadiran -->
+											<!-- Absensi -->
 											<tr>
-												<td colspan="3" style="background-color: #f8f9fa; text-align: center;">Presensi kehadiran</td>
+												<td colspan="3" style="background-color: #f8f9fa; text-align: center;">Absensi</td>
 											</tr>
 											<tr style="background-color: #cce5ff;">
 												<td>C4.1</td>

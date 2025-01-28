@@ -221,7 +221,7 @@ class DatabaseSeeder extends Seeder
             [
                 'kriteria_id' => 1,
                 'kode' => 'C1.3',
-                'rentang' => 'S1/S2',
+                'rentang' => 'S2',
                 'bobot' => '3',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -271,7 +271,7 @@ class DatabaseSeeder extends Seeder
             [
                 'kriteria_id' => 3,
                 'kode' => 'C3.3',
-                'rentang' => '≥12',
+                'rentang' => '>12',
                 'bobot' => '3',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -297,7 +297,7 @@ class DatabaseSeeder extends Seeder
             [
                 'kriteria_id' => 4,
                 'kode' => 'C4.2',
-                'rentang' => '≥85%',
+                'rentang' => '>85%',
                 'bobot' => '2',
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -84,7 +84,7 @@ class RekapController extends Controller
             'chartImages' => $chartImages, // Path gambar grafik
         ]);
 
-        return $pdf->stream('rekap_penilaian_karyawan.pdf');
+        return $pdf->download('rekap_penilaian_karyawan.pdf');
     }
 
     private function generateChartConfig($divisi, $tanggal, $data)

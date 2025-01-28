@@ -83,7 +83,7 @@
 
 					<!-- sidebar menu -->
 					<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-						@if (auth()->user()->role == 'pimpinan')
+						@if (auth()->user()->role == 'direktur')
 							<div class="menu_section">
 								<h3>Menu</h3>
 								<ul class="nav side-menu">
@@ -106,7 +106,7 @@
 									</li>
 								</ul>
 							</div>
-						@elseif(auth()->user()->role == 'hrd')
+						@elseif(auth()->user()->role == 'operasional')
 							<div class="menu_section">
 								<h3>Menu</h3>
 								<ul class="nav side-menu">

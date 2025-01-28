@@ -27,15 +27,15 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         User::create([
-            'name' => 'HRD',
-            'role' => 'hrd',
-            'username' => 'hrd',
+            'name' => 'Operasional',
+            'role' => 'operasional',
+            'username' => 'operasional',
             'password' => Hash::make('123'),
         ]);
         User::create([
-            'name' => 'Pimpinan',
-            'role' => 'pimpinan',
-            'username' => 'pimpinan',
+            'name' => 'direktur',
+            'role' => 'direktur',
+            'username' => 'direktur',
             'password' => Hash::make('123'),
         ]);
 
@@ -183,7 +183,7 @@ class DatabaseSeeder extends Seeder
                 'kode' => 'C3',
             ],
             [
-                'nama' => 'Absensi',
+                'nama' => 'Presensi kehadiran',
                 'kode' => 'C4',
             ],
             [
@@ -279,7 +279,7 @@ class DatabaseSeeder extends Seeder
 
             // Sub-kriteria untuk Kriteria C4
             [
-                'kriteria_id' => 4, // Kriteria 'Absensi'
+                'kriteria_id' => 4, // Kriteria 'Presensi kehadiran'
                 'kode' => 'C4.1',
                 'rentang' => '75-80%',
                 'bobot' => '1',

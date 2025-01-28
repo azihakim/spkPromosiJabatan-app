@@ -6,7 +6,7 @@
 	<title>Rekapitulasi Penilaian Karyawan</title>
 	<style>
 		body {
-			font-family: 'DejaVu Sans',Arial, sans-serif;
+			font-family: 'DejaVu Sans', Arial, sans-serif;
 			font-size: 12px;
 			margin: 0;
 			padding: 0;
@@ -46,6 +46,7 @@
 			margin-top: 10px;
 		}
 	</style>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -89,39 +90,39 @@
 			</table>
 		@endforeach --}}
 
-@foreach ($totalNilaiPerDivisi->groupBy('divisi') as $divisi => $dataDivisi)
-    <h3 class="mt-4">Divisi: {{ $divisi }}</h3>
+		@foreach ($totalNilaiPerDivisi->groupBy('divisi') as $divisi => $dataDivisi)
+			<h3 class="mt-4">Divisi: {{ $divisi }}</h3>
 
-    <table class="table table-bordered table-striped">
-        <thead class="thead-dark">
-            <tr>
-                <th>Rank</th>
-                <th>Karyawan</th>
-                <th>Nilai</th>
-                <th>Tingkat Pendidikan</th>
-                <th>Kompetensi</th>
-                <th>Tekanan Waktu</th>
-                <th>Absensi</th>
-                <th>Tanggung Jawab</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $rank = 1; // Inisialisasi rank
-            @endphp
-            @foreach ($dataDivisi as $data)
-                <tr>
-                    <td>{{ $rank++ }}</td>
-                    <td>{{ $data->nama_karyawan }}</td>
-                    <td>{{ number_format($data->total_nilai, 2) }}</td>
-                    @foreach ($data->kriteria as $kriteria)
-                        <td>{{ $kriteria['rentang_subkriteria'] ?? '-' }}</td>
-                    @endforeach
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-@endforeach
+			<table class="table table-bordered table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th>Rank</th>
+						<th>Karyawan</th>
+						<th>Nilai</th>
+						<th>Tingkat Pendidikan</th>
+						<th>Kompetensi</th>
+						<th>Tekanan Waktu</th>
+						<th>Presensi kehadiran</th>
+						<th>Tanggung Jawab</th>
+					</tr>
+				</thead>
+				<tbody>
+					@php
+						$rank = 1; // Inisialisasi rank
+					@endphp
+					@foreach ($dataDivisi as $data)
+						<tr>
+							<td>{{ $rank++ }}</td>
+							<td>{{ $data->nama_karyawan }}</td>
+							<td>{{ number_format($data->total_nilai, 2) }}</td>
+							@foreach ($data->kriteria as $kriteria)
+								<td>{{ $kriteria['rentang_subkriteria'] ?? '-' }}</td>
+							@endforeach
+						</tr>
+					@endforeach
+				</tbody>
+			</table>
+		@endforeach
 
 
 
@@ -130,7 +131,34 @@
 
 	</div>
 
+	<script>
+		< script >
+			const ctx = document.getElementById('chart').getContext('2d');
+		const chartData = @json($data->map(fn($item) => $item['total_nilai']));
+		const chartLabels = @json($data->map(fn($item) => $item['nama_karyawan']));
 
+		new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: chartLabels,
+				datasets: [{
+					label: 'Total Nilai',
+					data: chartData,
+					backgroundColor: 'rgba(75, 192, 192, 0.2)',
+					borderColor: 'rgba(75, 192, 192, 1)',
+					borderWidth: 1,
+				}],
+			},
+			options: {
+				scales: {
+					y: {
+						beginAtZero: true,
+					},
+				},
+			},
+		});
+	</script>
+	</script>
 </body>
 
 </html>

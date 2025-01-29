@@ -62,23 +62,23 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'nama' => 'Alda',
-                'divisi' => 'Unit Khusus'
+                'divisi' => 'Marketing'
             ],
             [
                 'nama' => 'Devi',
-                'divisi' => 'Unit Khusus'
+                'divisi' => 'Marketing'
             ],
             [
                 'nama' => 'Dian',
-                'divisi' => 'Unit Khusus'
+                'divisi' => 'Marketing'
             ],
             [
                 'nama' => 'Anto',
-                'divisi' => 'Unit Khusus'
+                'divisi' => 'Marketing'
             ],
             [
                 'nama' => 'Abi',
-                'divisi' => 'Unit Khusus'
+                'divisi' => 'Marketing'
             ],
             [
                 'nama' => 'Imam',

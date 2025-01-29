@@ -59,7 +59,7 @@ class RekapController extends Controller
         $tgl_sampai = $request->tgl_sampai; // Input tanggal akhir
 
         // Mengambil total nilai per divisi berdasarkan tanggal yang dipilih
-        $totalNilaiPerDivisi = $this->getTotalNilaiPerDivisi($tgl_dari, $tgl_sampai);
+        $totalNilaiPerDivisi = $this->getTotalNilaiPerDivisi($tgl_dari, $tgl_sampai)->sortByDesc('total_nilai');
 
         // Data untuk grafik
         $grafikData = $this->showChart($request);

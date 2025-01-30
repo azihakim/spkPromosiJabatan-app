@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('karyawan_id');
             $table->foreign('karyawan_id')->references('id')->on('karyawans');
+            $table->unsignedBigInteger('kriteria_id')->nullable();
+            $table->foreign('kriteria_id')->references('id')->on('kriterias');
             $table->string('tgl_penilaian');
             $table->string('divisi');
             $table->integer('peringkat');

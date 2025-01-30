@@ -130,7 +130,7 @@
 											</tr>
 											<tr style="background-color: #f8d7da;">
 												<td>C1.3</td>
-												<td>S1/S2</td>
+												<td>S2</td>
 												<td>3</td>
 											</tr>
 

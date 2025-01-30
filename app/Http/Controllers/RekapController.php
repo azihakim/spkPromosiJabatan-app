@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Livewire\Penilaian;
 use App\Models\Penilaiandb;
 use Barryvdh\DomPDF\PDF;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class RekapController extends Controller
 {
@@ -53,10 +55,24 @@ class RekapController extends Controller
 
     public function getRekap(Request $request)
     {
-        $tgl_dari = $request->tgl_dari; // Pastikan input tanggal penilaian yang dikirim adalah range
-        $tgl_sampai = $request->tgl_sampai;
+        $tgl_dari = $request->tgl_dari; // Input tanggal awal
+        $tgl_sampai = $request->tgl_sampai; // Input tanggal akhir
+
         // Mengambil total nilai per divisi berdasarkan tanggal yang dipilih
-        $totalNilaiPerDivisi = $this->getTotalNilaiPerDivisi($tgl_dari, $tgl_sampai);
+        $totalNilaiPerDivisi = $this->getTotalNilaiPerDivisi($tgl_dari, $tgl_sampai)->sortByDesc('total_nilai');
+
+        // Data untuk grafik
+        $grafikData = $this->showChart($request);
+
+        // Generate gambar grafik untuk setiap divisi dan tanggal
+        $chartImages = [];
+        foreach ($grafikData['grafikData'] as $divisi => $tanggalData) {
+            foreach ($tanggalData as $tanggal => $data) {
+                $chartConfig = $this->generateChartConfig($divisi, $tanggal, $data);
+                $chartImagePath = $this->generateChartImage($chartConfig, $divisi, $tanggal);
+                $chartImages[$divisi][$tanggal] = $chartImagePath;
+            }
+        }
 
         // Generate PDF
         $pdf = app('dompdf.wrapper');
@@ -64,9 +80,110 @@ class RekapController extends Controller
             'tgl_dari' => $tgl_dari,
             'tgl_sampai' => $tgl_sampai,
             'totalNilaiPerDivisi' => $totalNilaiPerDivisi,
+            'grafik' => $grafikData,
+            'chartImages' => $chartImages, // Path gambar grafik
         ]);
+
         return $pdf->download('rekap_penilaian_karyawan.pdf');
     }
+
+    private function generateChartConfig($divisi, $tanggal, $data)
+    {
+        return [
+            'type' => 'bar',
+            'data' => [
+                'labels' => $data['karyawan'],
+                'datasets' => [
+                    [
+                        'label' => 'Nilai Penilaian',
+                        'data' => $data['nilai'],
+                        'backgroundColor' => 'rgba(75, 192, 192, 0.2)',
+                        'borderColor' => 'rgba(75, 192, 192, 1)',
+                        'borderWidth' => 1,
+                    ],
+                ],
+            ],
+            'options' => [
+                'responsive' => true,
+                'plugins' => [
+                    'title' => [
+                        'display' => true,
+                        'text' => "Grafik Nilai Divisi $divisi - Tanggal $tanggal",
+                    ],
+                ],
+                'scales' => [
+                    'y' => [
+                        'beginAtZero' => true,
+                        'title' => [
+                            'display' => true,
+                            'text' => 'Nilai',
+                        ],
+                    ],
+                    'x' => [
+                        'title' => [
+                            'display' => true,
+                            'text' => 'Karyawan',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    private function generateChartImage($chartConfig, $divisi, $tanggal)
+    {
+        $client = new Client();
+        $quickChartUrl = 'https://quickchart.io/chart';
+
+        // Kirim permintaan POST ke QuickChart
+        $response = $client->post($quickChartUrl, [
+            'json' => [
+                'chart' => $chartConfig,
+                'width' => 600,
+                'height' => 400,
+            ],
+        ]);
+
+        // Simpan gambar ke storage
+        $chartImagePath = "charts/{$divisi}_{$tanggal}.png";
+        Storage::disk('public')->put($chartImagePath, $response->getBody());
+
+        return $chartImagePath;
+    }
+
+
+    public function showChart(Request $request)
+    {
+        $tgl_dari = $request->input('tgl_dari');
+        $tgl_sampai = $request->input('tgl_sampai');
+
+        $dataPenilaian = DB::table('penilaians')
+            ->join('karyawans', 'penilaians.karyawan_id', '=', 'karyawans.id')
+            ->select('penilaians.*', 'karyawans.nama as nama_karyawan', 'penilaians.divisi', 'penilaians.tgl_penilaian')
+            ->whereBetween('penilaians.tgl_penilaian', [$tgl_dari, $tgl_sampai])
+            ->orderBy('penilaians.divisi')
+            ->get();
+
+        // Kelompokkan data berdasarkan divisi dan tanggal penilaian
+        $dataGroupedByDivisiTanggal = $dataPenilaian->groupBy(['divisi', 'tgl_penilaian']);
+
+        $grafikData = [];
+        foreach ($dataGroupedByDivisiTanggal as $divisi => $dataPerTanggal) {
+            foreach ($dataPerTanggal as $tanggal => $penilaianTanggal) {
+                $grafikData[$divisi][$tanggal] = [
+                    'karyawan' => $penilaianTanggal->pluck('nama_karyawan')->toArray(),
+                    'nilai' => $penilaianTanggal->pluck('nilai')->toArray(),
+                ];
+            }
+        }
+
+        return [
+            'grafikData' => $grafikData,
+        ];
+    }
+
+
+
     function getTotalNilaiPerDivisi($tgl_dari, $tgl_sampai)
     {
         // Mengambil data dengan join ke tabel kriteria dan sub_kriteria
